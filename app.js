@@ -45,13 +45,13 @@ bot.onText(/\/start/, (msg) => {
         .then(response => response.json())
         .then(responseData => {
             const bearerToken = responseData;
-            tokens[chatId] = bearerToken;
+            // tokens[chatId] = bearerToken;
 
 
             // Inline button creation
             const keyboard = {
                 inline_keyboard: [
-                    [{ text: "Doğrulama yap", callback_data: `verify:${chatId}` }]
+                    [{ text: "Doğrulama yap", callback_data: `verify:${bearerToken}` }]
                 ]
             };
             bot.sendMessage(
