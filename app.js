@@ -72,7 +72,7 @@ bot.onText(/\/start/, (msg) => {
 bot.on('callback_query', async (query) => {
     const chatId = query.message.chat.id;
     const bearerToken = query.message.text; // Tokeni buradan alabilirsiniz veya veritabanında saklayabilirsiniz
-    const url = 'https://8593-78-177-177-231.ngrok-free.app/auth/login'; // Hedef URL
+    const url = 'https://t.me/legit_verified_bot/legit_bot'; // Hedef URL
 
     const headers = {
         'Authorization': `Bearer ${bearerToken}`,
