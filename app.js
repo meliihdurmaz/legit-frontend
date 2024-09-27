@@ -25,7 +25,7 @@ bot.onText(/\/start/, (msg) => {
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
 
     // Doğrulama URL'si
-    const url = `https://telagramapplegit-a55c4719cc06.herokuapp.com/?telegramId=${telegramId}&username=${userName}`;
+    const url = `https://t.me/legit_v1_bot/legit?telegramId=${telegramId}&username=${userName}`;
     
     // Inline buton oluşturma
     const keyboard = {
