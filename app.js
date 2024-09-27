@@ -35,34 +35,20 @@ bot.onText(/\/start/, (msg) => {
     const telegramId = msg.from.id.toString(); // Kullanıcının Telegram ID'si
     const data = { email: telegramId, password: "legitbot" };
     const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),  // Send the data as JSON
-    })
-    .then(response => response.json())
-    .then(responseData => {
-        bearer=encodeURIComponent(responseData);
-        const url = `https://t.me/legit_v1_bot/legit?token=${bearer}`;
-        // Inline button creation
-        const keyboard = {
-            inline_keyboard: [
-                [{ text: "Doğrulama yap", url: url }]
-            ]
-        };
-        // Send message to the user
-        bot.sendMessage(
-            chatId,
-            'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
-            { reply_markup: keyboard }
-        );
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-   
+    
+    const url = `https://t.me/legit_v1_bot/legit`;
+    // Inline button creation
+    const keyboard = {
+        inline_keyboard: [
+            [{ text: "Doğrulama yap", url: url }]
+        ]
+    };
+    // Send message to the user
+    bot.sendMessage(
+        chatId,
+        'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
+        { reply_markup: keyboard }
+    );
 });
 
 // Sunucuyu dinle
