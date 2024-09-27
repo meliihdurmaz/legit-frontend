@@ -106,7 +106,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get('token');
 
-      document.getElementById('telegramId').innerText = `Telegram ID: ${token}`;
+      document.getElementById('telegramId').innerText = `Telegram ID: ${window.location.href}`;
     };
   </script>
 </head>
