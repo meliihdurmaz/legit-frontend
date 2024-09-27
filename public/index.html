@@ -17,6 +17,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams);
     const token = urlParams.get('token');
+    console.log(token);
     localStorage.setItem('token', token);
     document.getElementById('telegramId').innerText = `token: ${token}`;
 
