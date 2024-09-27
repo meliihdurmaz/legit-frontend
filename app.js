@@ -35,7 +35,7 @@ bot.onText(/\/start/, (msg) => {
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
     const data = { telegramId, userName };
-    const apiUrl = 'http://localhost:8000/auth/login';
+    const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
     fetch(apiUrl, {
         method: 'POST',
         headers: {
