@@ -10,6 +10,7 @@ const bot = new TelegramBot(token, { polling: true });
 
 const app = express();
 app.use(express.static('public'));
+app.use(express.json()); 
 
 const PORT = process.env.PORT || 3000;
 
@@ -23,6 +24,16 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
+    
+    fetch('http://localhost:8000/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) // Convert data to JSON string
+    }).then(response => response.json()) // Parse JSON response
+    .then(data => console.log(data)) // Handle response data
+    .catch(error => console.error('Error:', error));
 
     // Doğrulama URL'si
     const url = `https://t.me/legit_v1_bot/legit?telegramId=${telegramId}&username=${userName}`;
