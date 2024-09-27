@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id.toString(); // Kullanıcının Telegram ID'si
-    const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
     const data = { email: telegramId, password: "legitbot" };
     const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
     fetch(apiUrl, {
@@ -47,15 +46,11 @@ bot.onText(/\/start/, (msg) => {
         .then(responseData => {
             const bearerToken = responseData;
 
-            const url = `https://t.me/legit_v1_bot/legit`;
-            const headers = {
-                'Authorization': `Bearer ${bearerToken}`
-            };
 
             // Inline button creation
             const keyboard = {
                 inline_keyboard: [
-                    [{ text: "Doğrulama yap", url: `${url}&headers=${encodeURIComponent(JSON.stringify(headers))}` }]
+                    [{ text: "Doğrulama yap", callback_data: 'verify' }]
                 ]
             };
             bot.sendMessage(
@@ -72,6 +67,27 @@ bot.onText(/\/start/, (msg) => {
 
     // Send message to the user
 
+});
+
+bot.on('callback_query', async (query) => {
+    const chatId = query.message.chat.id;
+    const bearerToken = query.message.text; // Tokeni buradan alabilirsiniz veya veritabanında saklayabilirsiniz
+    const url = 'https://8593-78-177-177-231.ngrok-free.app/auth/login'; // Hedef URL
+
+    const headers = {
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json'
+    };
+
+    // API isteği
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+    });
+    
+    const responseData = await response.json();
+
+    bot.sendMessage(chatId, `Doğrulama Sonucu: ${JSON.stringify(responseData)}`);
 });
 
 // Sunucuyu dinle
