@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
+const fetch = require('node-fetch');
 
 // Bot tokeninizi buraya ekleyin
 const token = '7642700137:AAGL1ptojbliCSLRgzIf0dlLBNd6LCtV368';
@@ -24,6 +25,10 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
+    const data = {
+        telegramId: telegramId,
+        userName: userName
+    };
     
     fetch('http://localhost:8000/auth/login', {
         method: 'POST',
