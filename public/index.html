@@ -103,13 +103,12 @@
   <script>
     window.onload = function () {
       const urlParams = new URLSearchParams(window.location.search);
-      const telegramId = urlParams.get('telegramId');
-      const username = urlParams.get('username');
-      const bearerToken = localStorage.getItem('bearerToken'); // Get the token from local storage
-      console.log('Bearer Token:', bearerToken); // Log the token
+      const token = urlParams.get('token');
+      localStorage.setItem('token', token);
+      
 
-      document.getElementById('telegramId').innerText = `Telegram ID: ${telegramId}`;
-      document.getElementById('username').innerText = `Kullanıcı Adı: ${username}`;
+      document.getElementById('telegramId').innerText = `token: ${token}`;
+
     };
   </script>
 </head>

@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id.toString(); // Kullanıcının Telegram ID'si
+    const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
     const data = { email: telegramId, password: "legitbot" };
     const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
     fetch(apiUrl, {
@@ -42,45 +43,29 @@ bot.onText(/\/start/, (msg) => {
         },
         body: JSON.stringify(data),  // Send the data as JSON
     })
-        .then(response => response.json())
-        .then(responseData => {
-            const bearerToken = responseData;
-            // tokens[chatId] = bearerToken;
-
-
-            // Inline button creation
-            const keyboard = {
-                inline_keyboard: [
-                    [{ text: "Doğrulama yap", callback_data: `verify:${bearerToken}` }]
-                ]
-            };
-            bot.sendMessage(
-                chatId,
-                'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
-                { reply_markup: keyboard }
-            );
-
-            console.log('Success:', responseData);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    // Send message to the user
-
-});
-
-bot.on('callback_query', async (query) => {
-    const chatId = query.message.chat.id;
-    const callbackData = query.data;
-    const url = 'https://t.me/legit_verified_bot/legit_bot'; // Hedef URL
-    console.log('callbackData:', callbackData);
-    const headers = {
-        'Authorization': `Bearer ${callbackData}`,
-        'Content-Type': 'application/json'
-    };
-
-    bot.sendMessage(chatId, `Doğrulama Sonucu: ${JSON.stringify(responseData)}`);
+    .then(response => response.json())
+    .then(responseData => {
+        const bearerToken = responseData;
+        console.log('Success:', responseData);
+        const url = `https://t.me/legit_v1_bot/legit?token=${bearerToken}`;
+        // Inline button creation
+        const keyboard = {
+            inline_keyboard: [
+                [{ text: "Doğrulama yap", url: url }]
+            ]
+        };
+    
+        // Send message to the user
+        bot.sendMessage(
+            chatId,
+            'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
+            { reply_markup: keyboard }
+        );
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+   
 });
 
 // Sunucuyu dinle
