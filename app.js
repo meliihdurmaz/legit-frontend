@@ -1,6 +1,9 @@
 const path = require('path');
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
+const cors = require('cors');
+app.use(cors());
+
 // const fetch = require('node-fetch');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const serviceUrl = process.env.SERVICE_URL || 'http://localhost:8000';
