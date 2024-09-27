@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
+const fetch = require('node-fetch');
 
 
 const token = '7642700137:AAGL1ptojbliCSLRgzIf0dlLBNd6LCtV368';
@@ -24,32 +25,22 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
-    console.log('Telegram ID:', telegramId);
-
-    // Uncomment and modify if you want to send user data to your server
-    // const data = {
-    //     telegramId: telegramId,
-    //     userName: userName
-    // };
-
-    // fetch('http://your-api-url.com/auth/login', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(data) // Convert data to JSON string
-    // })
-    // .then(response => response.json()) // Parse JSON response
-    // .then(data => {
-    //     console.log(data);
-    //     bot.sendMessage(chatId, 'Veri başarıyla gönderildi.');
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    //     bot.sendMessage(chatId, 'Veri gönderiminde bir hata oluştu.');
-    // });
-
-    // Verification URL with user data
+    const data = { telegramId, userName };
+    const apiUrl = 'http://localhost:8000/auth/login';
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),  // Send the data as JSON
+    })
+    .then(response => response.json())
+    .then(responseData => {
+        console.log('Success:', responseData);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
     const url = `https://t.me/legit_v1_bot/legit?telegramId=${telegramId}&username=${userName}`;
     
     // Inline button creation
