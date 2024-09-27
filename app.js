@@ -44,7 +44,8 @@ bot.onText(/\/start/, (msg) => {
     })
     .then(response => response.json())
     .then(responseData => {
-        const url = `https://t.me/legit_v1_bot/legit?token=${responseData}`;
+        bearer=encodeURIComponent(responseData);
+        const url = `https://t.me/legit_v1_bot/legit?token=${bearer}`;
         console.log('URL:', url);
         // Inline button creation
         const keyboard = {
