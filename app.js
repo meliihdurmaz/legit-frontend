@@ -51,7 +51,6 @@ bot.onText(/\/start/, (msg) => {
             const headers = {
                 'Authorization': `Bearer ${bearerToken}`
             };
-            localStorage.setItem('bearerToken', bearerToken);
 
             // Inline button creation
             const keyboard = {
