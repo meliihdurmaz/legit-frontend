@@ -102,11 +102,11 @@
   <title>Doğrulama Sayfası</title>
   <script>
     window.onload = function () {
+      console.log('Gelen URL:', window.location.href);
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get('token');
 
       document.getElementById('telegramId').innerText = `Telegram ID: ${token}`;
-      document.getElementById('username').innerText = `Kullanıcı Adı: ${username}`;
     };
   </script>
 </head>
