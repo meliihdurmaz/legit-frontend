@@ -24,6 +24,7 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
+    console.log('Telegram ID:', telegramId);
 
     // Uncomment and modify if you want to send user data to your server
     // const data = {
