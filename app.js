@@ -28,27 +28,27 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
-    const data = {
-        telegramId: telegramId,
-        userName: userName
-    };
+    // const data = {
+    //     telegramId: telegramId,
+    //     userName: userName
+    // };
 
-    fetch('http://localhost:8000/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) // Convert data to JSON string
-    })
-    .then(response => response.json()) // Parse JSON response
-    .then(data => {
-        console.log(data);
-        bot.sendMessage(chatId, 'Veri başarıyla gönderildi.');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        bot.sendMessage(chatId, 'Veri gönderiminde bir hata oluştu.');
-    });
+    // fetch('http://localhost:8000/auth/login', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data) // Convert data to JSON string
+    // })
+    // .then(response => response.json()) // Parse JSON response
+    // .then(data => {
+    //     console.log(data);
+    //     bot.sendMessage(chatId, 'Veri başarıyla gönderildi.');
+    // })
+    // .catch(error => {
+    //     console.error('Error:', error);
+    //     bot.sendMessage(chatId, 'Veri gönderiminde bir hata oluştu.');
+    // });
 
     // Doğrulama URL'si
     const url = `https://t.me/legit_v1_bot/legit?telegramId=${telegramId}&username=${userName}`;
