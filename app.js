@@ -43,28 +43,36 @@ bot.onText(/\/start/, (msg) => {
         },
         body: JSON.stringify(data),  // Send the data as JSON
     })
-    .then(response => response.json())
-    .then(responseData => {
-        console.log('Success:', responseData);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-    const url = `https://t.me/legit_v1_bot/legit?telegramId=${telegramId}&username=${userName}`;
-    
-    // Inline button creation
-    const keyboard = {
-        inline_keyboard: [
-            [{ text: "Doğrulama yap", url: url }]
-        ]
-    };
+        .then(response => response.json())
+        .then(responseData => {
+            const bearerToken = responseData;
+
+            const url = `https://t.me/legit_v1_bot/legit`;
+            const headers = {
+                'Authorization': `Bearer ${bearerToken}`
+            };
+            localStorage.setItem('bearerToken', bearerToken);
+
+            // Inline button creation
+            const keyboard = {
+                inline_keyboard: [
+                    [{ text: "Doğrulama yap", url: `${url}&headers=${encodeURIComponent(JSON.stringify(headers))}` }]
+                ]
+            };
+            bot.sendMessage(
+                chatId,
+                'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
+                { reply_markup: keyboard }
+            );
+
+            console.log('Success:', responseData);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
     // Send message to the user
-    bot.sendMessage(
-        chatId,
-        'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
-        { reply_markup: keyboard }
-    );
+
 });
 
 // Sunucuyu dinle

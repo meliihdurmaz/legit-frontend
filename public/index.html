@@ -105,6 +105,8 @@
       const urlParams = new URLSearchParams(window.location.search);
       const telegramId = urlParams.get('telegramId');
       const username = urlParams.get('username');
+      const bearerToken = localStorage.getItem('bearerToken'); // Get the token from local storage
+      console.log('Bearer Token:', bearerToken); // Log the token
 
       document.getElementById('telegramId').innerText = `Telegram ID: ${telegramId}`;
       document.getElementById('username').innerText = `Kullanıcı Adı: ${username}`;
