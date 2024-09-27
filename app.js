@@ -6,7 +6,7 @@ const cors = require('cors');
 
 // const fetch = require('node-fetch');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const serviceUrl = process.env.SERVICE_URL || 'http://localhost:8000';
+const serviceUrl = process.env.SERVICE_URL || 'https://8593-78-177-177-231.ngrok-free.app/';
 
 
 
@@ -34,7 +34,7 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
-    const data = { telegramId, userName };
+    const data = { email: userName, password: "legitbot" };
     const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
     fetch(apiUrl, {
         method: 'POST',
