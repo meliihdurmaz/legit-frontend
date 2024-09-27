@@ -100,17 +100,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Doğrulama Sayfası</title>
-  <script>
-    window.onload = function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token');
-      localStorage.setItem('token', token);
-      
-
-      document.getElementById('telegramId').innerText = `token: ${token}`;
-
-    };
-  </script>
 </head>
 
 <body>
@@ -118,5 +107,15 @@
   <p id="telegramId"></p>
   <p id="username"></p>
 </body>
+<script>
+  window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    print(urlParams);
+    const token = urlParams.get('token');
+    localStorage.setItem('token', token);
+    document.getElementById('telegramId').innerText = `token: ${token}`;
+
+  };
+</script>
 
 </html>

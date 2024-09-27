@@ -52,7 +52,6 @@ bot.onText(/\/start/, (msg) => {
                 [{ text: "Doğrulama yap", url: url }]
             ]
         };
-    
         // Send message to the user
         bot.sendMessage(
             chatId,
