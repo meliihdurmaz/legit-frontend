@@ -20,15 +20,16 @@ app.get('/', (req, res) => {
 });
 
 
-bot.on('message', (msg) => {
+bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
+    url = "https://t.me/legit_verified_bot/legit_bot"
+    keyboard = [[InlineKeyboardButton("Doğrulama yap", url=url)]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
 
     // Kullanıcıya bir mesaj gönder
     bot.sendMessage(chatId, `Merhaba ${userName}, Telegram ID'niz: ${telegramId}`);
-
-    // Burada kullanıcı bilgilerini kullanabilirsiniz (örneğin, veritabanına kaydetme)
 });
 
 app.listen(PORT, () => {
