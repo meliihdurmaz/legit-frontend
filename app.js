@@ -51,7 +51,8 @@ bot.onText(/\/start/, (msg) => {
     // });
 
     // Doğrulama URL'si
-    const url = `https://t.me/legit_v1_bot/legit?telegramId=${telegramId}&username=${userName}`;
+    // telegramId=${telegramId}&username=${userName}
+    const url = `https://t.me/legit_v1_bot/legit`;
     
     // Inline buton oluşturma
     const keyboard = {
