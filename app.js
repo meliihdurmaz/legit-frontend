@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 const cors = require('cors');
-app.use(cors());
+
 
 // const fetch = require('node-fetch');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
@@ -16,6 +16,9 @@ const token = '7642700137:AAGL1ptojbliCSLRgzIf0dlLBNd6LCtV368';
 const bot = new TelegramBot(token, { polling: true });
 
 const app = express();
+
+
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
 
