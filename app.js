@@ -45,13 +45,13 @@ bot.onText(/\/start/, (msg) => {
         .then(response => response.json())
         .then(responseData => {
             const bearerToken = responseData;
-            const encodedToken = encodeURIComponent(bearerToken);
+            tokens[chatId] = bearerToken;
 
 
             // Inline button creation
             const keyboard = {
                 inline_keyboard: [
-                    [{ text: "Doğrulama yap", callback_data: `verify:${encodedToken}` }]
+                    [{ text: "Doğrulama yap", callback_data: `verify:${chatId}` }]
                 ]
             };
             bot.sendMessage(
@@ -74,19 +74,11 @@ bot.on('callback_query', async (query) => {
     const chatId = query.message.chat.id;
     const callbackData = query.data;
     const url = 'https://t.me/legit_verified_bot/legit_bot'; // Hedef URL
-
+    console.log('callbackData:', callbackData);
     const headers = {
         'Authorization': `Bearer ${callbackData}`,
         'Content-Type': 'application/json'
     };
-
-    // API isteği
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-    });
-    
-    const responseData = await response.json();
 
     bot.sendMessage(chatId, `Doğrulama Sonucu: ${JSON.stringify(responseData)}`);
 });
