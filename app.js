@@ -45,12 +45,13 @@ bot.onText(/\/start/, (msg) => {
         .then(response => response.json())
         .then(responseData => {
             const bearerToken = responseData;
+            const encodedToken = encodeURIComponent(bearerToken);
 
 
             // Inline button creation
             const keyboard = {
                 inline_keyboard: [
-                    [{ text: "Doğrulama yap", callback_data: 'verify' }]
+                    [{ text: "Doğrulama yap", callback_data: `verify:${encodedToken}` }]
                 ]
             };
             bot.sendMessage(
@@ -71,11 +72,11 @@ bot.onText(/\/start/, (msg) => {
 
 bot.on('callback_query', async (query) => {
     const chatId = query.message.chat.id;
-    const bearerToken = query.message.text; // Tokeni buradan alabilirsiniz veya veritabanında saklayabilirsiniz
+    const callbackData = query.data;
     const url = 'https://t.me/legit_verified_bot/legit_bot'; // Hedef URL
 
     const headers = {
-        'Authorization': `Bearer ${bearerToken}`,
+        'Authorization': `Bearer ${callbackData}`,
         'Content-Type': 'application/json'
     };
 
