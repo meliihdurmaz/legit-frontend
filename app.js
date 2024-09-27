@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id.toString(); // Kullanıcının Telegram ID'si
-    const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
     const data = { email: telegramId, password: "legitbot" };
     const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
     fetch(apiUrl, {
@@ -46,6 +45,7 @@ bot.onText(/\/start/, (msg) => {
     .then(response => response.json())
     .then(responseData => {
         const url = `https://t.me/legit_v1_bot/legit?token=${responseData}`;
+        console.log('URL:', url);
         // Inline button creation
         const keyboard = {
             inline_keyboard: [
