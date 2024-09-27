@@ -24,12 +24,22 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
-    url = "https://t.me/legit_verified_bot/legit_bot"
-    keyboard = [[InlineKeyboardButton("Doğrulama yap", url=url)]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
 
-    // Kullanıcıya bir mesaj gönder
-    bot.sendMessage(chatId, `Merhaba ${userName}, Telegram ID'niz: ${telegramId}`);
+    // Doğrulama URL'si
+    const url = `https://telagramapplegit-a55c4719cc06.herokuapp.com/?telegramId=${telegramId}&username=${userName}`;
+    
+    // Inline buton oluşturma
+    const keyboard = [
+        [InlineKeyboardButton("Doğrulama yap", url)] // Buton URL'sini burada ayarlayın
+    ];
+    const reply_markup = InlineKeyboardMarkup(keyboard);
+
+    // Kullanıcıya mesaj gönder
+    bot.sendMessage(
+        chatId,
+        'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
+        { reply_markup }
+    );
 });
 
 app.listen(PORT, () => {

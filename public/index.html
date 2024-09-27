@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -62,11 +62,11 @@
   </style>
 </head>
 <body>
-  <!-- <div class="container">
+  <div class="container">
     <div class="popup-note">
       <a href="/manager/login/manager.html"><p>Connect to Manager</p></a>
     </div>
-  </div> -->
+  </div>
   <div class="container">
     <div class="popup-note">
       <p>Login Telegram</p>
@@ -91,4 +91,31 @@
     }
   </script>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doğrulama Sayfası</title>
+  <script>
+    window.onload = function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const telegramId = urlParams.get('telegramId');
+      const username = urlParams.get('username');
+
+      document.getElementById('telegramId').innerText = `Telegram ID: ${telegramId}`;
+      document.getElementById('username').innerText = `Kullanıcı Adı: ${username}`;
+    };
+  </script>
+</head>
+
+<body>
+  <h1>Doğrulama Başarılı</h1>
+  <p id="telegramId"></p>
+  <p id="username"></p>
+</body>
+
 </html>
