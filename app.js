@@ -1,10 +1,8 @@
 const path = require('path');
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
-const fetch = require('node-fetch');
 
 
-// Bot tokeninizi buraya ekleyin
 const token = '7642700137:AAGL1ptojbliCSLRgzIf0dlLBNd6LCtV368';
 
 // Telegram botunu başlat
@@ -26,12 +24,14 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id; // Kullanıcının Telegram ID'si
     const userName = msg.from.username; // Kullanıcının Telegram kullanıcı adı
+
+    // Uncomment and modify if you want to send user data to your server
     // const data = {
     //     telegramId: telegramId,
     //     userName: userName
     // };
 
-    // fetch('http://localhost:8000/auth/login', {
+    // fetch('http://your-api-url.com/auth/login', {
     //     method: 'POST',
     //     headers: {
     //         'Content-Type': 'application/json'
@@ -48,18 +48,17 @@ bot.onText(/\/start/, (msg) => {
     //     bot.sendMessage(chatId, 'Veri gönderiminde bir hata oluştu.');
     // });
 
-    // Doğrulama URL'si
-    // telegramId=${telegramId}&username=${userName}
-    const url = `https://t.me/legit_v1_bot/legit`;
+    // Verification URL with user data
+    const url = `https://t.me/legit_v1_bot/legit?telegramId=${telegramId}&username=${userName}`;
     
-    // Inline buton oluşturma
+    // Inline button creation
     const keyboard = {
         inline_keyboard: [
-            [{ text: "Doğrulama yap", url: url }] // Buton URL'sini burada ayarlayın
+            [{ text: "Doğrulama yap", url: url }]
         ]
     };
 
-    // Kullanıcıya mesaj gönder
+    // Send message to the user
     bot.sendMessage(
         chatId,
         'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
