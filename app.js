@@ -3,6 +3,8 @@ const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 // const fetch = require('node-fetch');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const serviceUrl = process.env.SERVICE_URL || 'http://localhost:8000';
+
 
 
 const token = '7642700137:AAGL1ptojbliCSLRgzIf0dlLBNd6LCtV368';
