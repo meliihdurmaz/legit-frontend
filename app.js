@@ -29,46 +29,6 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// '/start' komutu alındığında
-// bot.onText(/\/start/, (msg) => {
-//     const chatId = msg.chat.id;
-//     const telegramId = msg.from.id.toString(); // Kullanıcının Telegram ID'si
-//     const data = { email: telegramId, password: "legitbot" };
-//     const apiUrl = 'https://29a5-78-177-177-231.ngrok-free.app/auth/login';
-//     // Sunucuya istek yap
-//     fetch(apiUrl, {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: { 'Content-Type': 'application/json' }
-//     })
-//         .then(res => res.json())
-//         .then(json => {
-//             // Eğer kullanıcı doğrulandıysa
-//             if (json) {
-//                 // Kullanıcıya mesaj gönder
-//                 const bearerToken = json;
-//                 const url = `https://t.me/legit_v1_bot/legit?token= ${bearerToken}`;
-//                 bot.sendMessage(chatId, 'Doğrulama başarılı!'+ url);
-//                 const keyboard = {
-//                     inline_keyboard: [
-//                         [{ text: "Doğrulama yap", url: url }]
-//                     ]
-//                 };
-//                 // Send message to the user
-//                 bot.sendMessage(
-//                     chatId,
-//                     'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
-//                     { reply_markup: keyboard }
-//                 );
-//             } else {
-//                 // Kullanıcıya mesaj gönder
-//                 bot.sendMessage(chatId, 'Doğrulama başarısız!');
-//             }
-//         })
-//         .catch(err => console.log(err));
-//     // Inline button creation
-// });
-
 // Sunucuyu dinle
 app.listen(PORT, () => {
     console.log(`Sunucu http://127.0.0.1:${PORT} adresinde çalışıyor`);
