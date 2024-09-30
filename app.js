@@ -20,11 +20,11 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     // 'public/index.html' dosyasını gönder
+    console.log("deneme");
     const queryParams = req.query;
-    console.log(queryParams);
-    // Örneğin, 'name' parametresini al
     const bearerToken = queryParams.token;
     if (bearerToken) {
+        
         res.cookie('bearerToken', bearerToken, { httpOnly: true }); // httpOnly güvenli çerez
     }
     res.sendFile(path.join(__dirname, 'public', 'index.html}'));
