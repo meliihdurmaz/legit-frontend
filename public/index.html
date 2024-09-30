@@ -1,11 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Telegram Uyumlu Web Uygulaması</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Hoş Geldiniz!</h1>
+        <p id="user-info">Kullanıcı bilgileri yükleniyor...</p>
+    </div>
 
+    <script>
+        // Telegram API'den kullanıcı bilgilerini almak için gerekli kod
+        const tData = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
+        const userInfoElement = document.getElementById('user-info');
+
+        if (tData && tData.user) {
+            const user = tData.user;
+            userInfoElement.innerHTML = `
+                <strong>İsim:</strong> ${user.first_name} <br>
+                <strong>Kullanıcı Adı:</strong> ${user.username ? user.username : 'Belirtilmemiş'} <br>
+                <strong>ID:</strong> ${user.id}
+            `;
+        } else {
+            userInfoElement.innerText = 'Kullanıcı bilgileri alınamadı.';
+        }
+    </script>
 </body>
 </html>
