@@ -19,12 +19,10 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
+    const token = req.query.token;
     // 'public/index.html' dosyasını gönder
-    console.log("deneme");
-    const queryParams = req.query;
-    const bearerToken = queryParams.token;
-    if (bearerToken) {
-        res.cookie('bearerToken', bearerToken, { httpOnly: true }); // httpOnly güvenli çerez
+    if (token) {
+        res.cookie('bearerToken', token, { httpOnly: true }); // httpOnly güvenli çerez
     }
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
