@@ -48,7 +48,7 @@ bot.onText(/\/start/, (msg) => {
                 // Kullanıcıya mesaj gönder
                 const bearerToken = json;
                 const url = `https://t.me/legit_v1_bot/legit?token= ${bearerToken}`;
-                bot.sendMessage(chatId, 'Doğrulama başarılı!');
+                bot.sendMessage(chatId, 'Doğrulama başarılı!'+ url);
             } else {
                 // Kullanıcıya mesaj gönder
                 bot.sendMessage(chatId, 'Doğrulama başarısız!');
