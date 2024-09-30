@@ -154,38 +154,48 @@
   </div>
   <script>
     function parseJwt(token) {
+      console.log(token);
+      if (!token) {
+        throw new Error("Geçersiz token: Token boş veya null.");
+      }
+      // Token'ı '.' ile ayır ve ikinci parçayı (Payload) al
       const base64Url = token.split('.')[1];
-      const base64 = decodeURIComponent(atob(base64Url).split('').map(function (c) {
+
+      // Base64 formatına uygun hale getir
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+
+      // Base64'ten çözümlenmiş JSON verisini al
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
-      return JSON.parse(base64);
+
+      // JSON formatında döndür
+      return JSON.parse(jsonPayload);
     }
+    // document.addEventListener('DOMContentLoaded', function () {
+    //   // localStorage'dan token'ı al
 
-    document.addEventListener('DOMContentLoaded', function () {
-      // localStorage'dan token'ı al
-      
-      const token = localStorage.getItem('bearerToken');
+    //   const token = localStorage.getItem('bearerToken');
 
 
-      if (token) {
-        // Token'ı çözümle
-        const decodedToken = parseJwt(token);
-        alert(decodedToken);
-        // Kullanıcı adını sayfada göster
-        // document.getElementById('username').textContent = decodedToken.username;
+    //   const decodedToken = parseJwt(token);
+    //   if (token) {
+    //     // Token'ı çözümle
+    //     alert(decodedToken);
+    //     // Kullanıcı adını sayfada göster
+    //     // document.getElementById('username').textContent = decodedToken.username;
 
-      } else {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        if (token) {
-          localStorage.setItem('bearerToken', token);
-        } else {
-          alert('Lütfen giriş yapın.');
-          // window.location.href = '/index.html';
-        }
-      }
-      load();
-    });
+    //   } else {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const token = urlParams.get('token');
+    //     if (token) {
+    //       localStorage.setItem('bearerToken', token);
+    //     } else {
+    //       alert('Lütfen giriş yapın.');
+    //       // window.location.href = '/index.html';
+    //     }
+    //   }
+    // });
     async function startTwitterConnect() {
       fetch('https://802f-78-177-177-231.ngrok-free.app/twitter/authorizeUrl')
         .then(response => response.json()) // JSON formatına çevir
