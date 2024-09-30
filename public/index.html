@@ -27,19 +27,12 @@
 
     <script>
         // Telegram API'den kullanıcı bilgilerini almak için gerekli kod
-        const tData = JSON.parse(decodeURIComponent(window.location.hash.substring(1)));
+        const queryParams = new URLSearchParams(window.location.search);
+        console.log(queryParams);
+        const token = queryParams.get('token');
+
         const userInfoElement = document.getElementById('user-info');
 
-        if (tData && tData.user) {
-            const user = tData.user;
-            userInfoElement.innerHTML = `
-                <strong>İsim:</strong> ${user.first_name} <br>
-                <strong>Kullanıcı Adı:</strong> ${user.username ? user.username : 'Belirtilmemiş'} <br>
-                <strong>ID:</strong> ${user.id}
-            `;
-        } else {
-            userInfoElement.innerText = 'Kullanıcı bilgileri alınamadı.';
-        }
     </script>
 </body>
 </html>
