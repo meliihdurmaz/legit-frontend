@@ -4,8 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+        // Sayfa yüklendiğinde çalışacak fonksiyon
+        window.onload = function() {
+            // LocalStorage'dan token'i al
+            const token = localStorage.getItem('token');
+
+            // Ekrana yazdır
+            const tokenDisplay = document.getElementById('tokenDisplay');
+            if (token) {
+                tokenDisplay.innerText = `Token: ${token}`;
+            } else {
+                tokenDisplay.innerText = 'Token bulunamadı.';
+            }
+        };
+    </script>
 </head>
 <body>
-    
+    <h1>Token Ekranı</h1>
+    <div id="tokenDisplay"></div>
 </body>
 </html>

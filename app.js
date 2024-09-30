@@ -10,9 +10,10 @@ app.use(express.json());
 app.use(cors({ origin: '*' }));
 
 app.get('/', (req, res) => {
-    console.log(req.query);
+    // console.log(req.query.token);
+    localStorage.setItem('token', req.query.token);
 
-    res.send('Hello World!');
+    res.send('/public/index.html');
 });
 
 
