@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 async function startTwitterConnect() {
     const token = localStorage.getItem('bearerToken');
-    const authUrl = `https://29a5-78-177-177-231.ngrok-free.app/twitter/authorizeUrl`;
+    const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
     try {
         const response = await fetch(authUrl, {
             method: 'GET',
