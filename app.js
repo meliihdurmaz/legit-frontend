@@ -12,8 +12,7 @@ const cookieParser = require('cookie-parser'); // Cookie parser kullanımı
 
 const app = express();
 
-
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
