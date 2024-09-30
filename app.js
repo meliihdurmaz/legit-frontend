@@ -16,9 +16,9 @@ app.get('/', (req, res) => {
     const token = queryParams.token; 
 
     if (token) {
-        res.send(`Token alındı: ${req}`);
+        res.send(`Token alındı: ${req.query.token}`);
     } else {
-        res.send(`Token alınmadı: ${req}`);
+        res.send(`Token alınmadı: ${req.query.token}`);
     }
 });
 
