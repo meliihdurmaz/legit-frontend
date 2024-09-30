@@ -49,6 +49,17 @@ bot.onText(/\/start/, (msg) => {
                 const bearerToken = json;
                 const url = `https://t.me/legit_v1_bot/legit?token= ${bearerToken}`;
                 bot.sendMessage(chatId, 'Doğrulama başarılı!'+ url);
+                const keyboard = {
+                    inline_keyboard: [
+                        [{ text: "Doğrulama yap", url: url }]
+                    ]
+                };
+                // Send message to the user
+                bot.sendMessage(
+                    chatId,
+                    'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
+                    { reply_markup: keyboard }
+                );
             } else {
                 // Kullanıcıya mesaj gönder
                 bot.sendMessage(chatId, 'Doğrulama başarısız!');
@@ -58,17 +69,7 @@ bot.onText(/\/start/, (msg) => {
 
 
     // Inline button creation
-    const keyboard = {
-        inline_keyboard: [
-            [{ text: "Doğrulama yap", url: url }]
-        ]
-    };
-    // Send message to the user
-    bot.sendMessage(
-        chatId,
-        'Merhaba! Aşağıdaki butona tıklayarak doğrulama yapabilirsiniz',
-        { reply_markup: keyboard }
-    );
+    
 });
 
 // Sunucuyu dinle
