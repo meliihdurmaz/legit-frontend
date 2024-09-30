@@ -5,9 +5,15 @@ const cors = require('cors');
 // const port = 3000;
 
 // Gerekli middleware
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use(express.json());
 app.use(cors({ origin: '*' }));
+
+app.get('/', (req, res) => {
+    console.log(req.query);
+
+    res.send('Hello World!');
+});
 
 
 
