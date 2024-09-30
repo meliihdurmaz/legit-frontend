@@ -132,6 +132,26 @@
 
   </div>
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const token = localStorage.getItem('bearerToken');
+
+    if (token) {
+        // Token'ı çözümle
+        const decodedToken = parseJwt(token);
+        // Kullanıcı adını sayfada göster
+        document.getElementById('username').textContent = decodedToken.username;
+
+    } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+            localStorage.setItem('bearerToken', token);
+        } else {
+            alert('Lütfen giriş yapın.');
+            window.location.href = '/index.html';
+        }
+    }
+});
     async function startTwitterConnect() {
       const token = localStorage.getItem('bearerToken');
       const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
