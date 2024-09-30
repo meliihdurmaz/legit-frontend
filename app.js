@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/user/:userId', (req, res) => {
+app.get('/user', (req, res) => {
     const { userId } = req.params;
     const token = req.query.token; // Token'ı al
 
