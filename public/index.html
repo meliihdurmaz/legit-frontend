@@ -204,14 +204,18 @@
         const errorText = await response.text(); // Hata mesajını al
         throw new Error(`API isteği başarısız: ${response.status} - ${errorText}`);
       }
+
+      // const data = await response.json();
       document.getElementById('result').innerHTML = "2";
-      document.getElementById('result').innerHTML = response;
+      // document.getElementById('result').innerHTML = response;
 
       const data = await response.json(); // JSON formatına çevir
-      document.getElementById('result').innerHTML = "3";
+      const authUrl = data.auth_url;
+      window.location.href = authUrl;
+      // document.getElementById('result').innerHTML = "3";
 
       // Gelen veriyi HTML'de göster
-      document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+      // document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
 
     }
   </script>
