@@ -24,35 +24,34 @@ app.get('/', (req, res) => {
     const queryParams = req.query;
     const bearerToken = queryParams.token;
     if (bearerToken) {
-        
         res.cookie('bearerToken', bearerToken, { httpOnly: true }); // httpOnly güvenli çerez
     }
-    res.sendFile(path.join(__dirname, 'public', 'index.html}'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/twitter/authorizeUrl', async (req, res) => {
-    // const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
+// app.get('/twitter/authorizeUrl', async (req, res) => {
+//     // const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
     
-    try {
-        const token = req.headers.authorization.split(' ')[1]; // Bearer token'ı alın
-        const response = await fetch(authUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
+//     try {
+//         const token = req.headers.authorization.split(' ')[1]; // Bearer token'ı alın
+//         const response = await fetch(authUrl, {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         });
 
-        if (response.ok) {
-            const data = await response.json();
-            res.json(data); // Yetkilendirme URL'sini frontend'e gönderiyoruz
-        } else {
-            res.status(500).json({ error: 'Twitter connection failed: ' + response.statusText });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'An error occurred: ' + error.message });
-    }
-});
+//         if (response.ok) {
+//             const data = await response.json();
+//             res.json(data); // Yetkilendirme URL'sini frontend'e gönderiyoruz
+//         } else {
+//             res.status(500).json({ error: 'Twitter connection failed: ' + response.statusText });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: 'An error occurred: ' + error.message });
+//     }
+// });
 
 // Sunucuyu dinle
 app.listen(PORT, () => {
