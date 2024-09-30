@@ -35,8 +35,28 @@ bot.onText(/\/start/, (msg) => {
     const telegramId = msg.from.id.toString(); // Kullanıcının Telegram ID'si
     const data = { email: telegramId, password: "legitbot" };
     const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
-    
-    const url = `https://t.me/legit_v1_bot/legit`;
+    // Sunucuya istek yap
+    fetch(apiUrl, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => res.json())
+        .then(json => {
+            // Eğer kullanıcı doğrulandıysa
+            if (json) {
+                // Kullanıcıya mesaj gönder
+                const bearerToken = json;
+                const url = `https://t.me/legit_v1_bot/legit?token= ${bearerToken}`;
+                bot.sendMessage(chatId, 'Doğrulama başarılı!');
+            } else {
+                // Kullanıcıya mesaj gönder
+                bot.sendMessage(chatId, 'Doğrulama başarısız!');
+            }
+        })
+        .catch(err => console.log(err));
+
+
     // Inline button creation
     const keyboard = {
         inline_keyboard: [
