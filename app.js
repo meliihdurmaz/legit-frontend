@@ -12,14 +12,14 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    const queryParams = req.query; 
-    const token = queryParams.token; 
+    const token = req.query.token;
+    res.sendFile(path.join(__dirname, 'public', 'homePage.html'));
 
-    if (token) {
-        res.send(`Token alındı: ${req.query.token}`);
-    } else {
-        res.send(`Token alınmadı: ${req.query.token}`);
-    }
+    // if (token) {
+    //     res.send(`Token alındı: ${req.query.token}`);
+    // } else {
+    //     res.send(`Token alınmadı: ${req.query.token}`);
+    // }
 });
 
 
