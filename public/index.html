@@ -197,7 +197,7 @@
     //   }
     // });
     async function startTwitterConnect() {
-      const response = await fetch('https://802f-78-177-177-231.ngrok-free.app/twitter/authorizeUrl');
+      const response = await fetch('https://3215-78-177-177-231.ngrok-free.app/twitter/authorizeUrl');
       document.getElementById('result').innerHTML = "geldi";
       if (!response.ok) {
         document.getElementById('result').innerHTML = "1";
@@ -205,21 +205,14 @@
         throw new Error(`API isteği başarısız: ${response.status} - ${errorText}`);
       }
       document.getElementById('result').innerHTML = "2";
+      document.getElementById('result').innerHTML = response;
+
       const data = await response.json(); // JSON formatına çevir
       document.getElementById('result').innerHTML = "3";
 
       // Gelen veriyi HTML'de göster
       document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
-      // fetch('https://802f-78-177-177-231.ngrok-free.app/twitter/authorizeUrl')
-      //   .then(response => response.json()) // JSON formatına çevir
-      //   .then(data => {
-      //     // Gelen veriyi HTML'de göster
 
-      //   })
-      //   .catch(error => {
-      //     console.error('Hata oluştu:', error);
-      //     document.getElementById('result').innerHTML = error;
-      //   });
     }
   </script>
 </body>
