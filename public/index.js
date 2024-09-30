@@ -23,14 +23,14 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('bearerToken', token);
         } else {
             alert('Lütfen giriş yapın.');
-            window.location.href = '/index.html';
+            // window.location.href = '/index.html';
         }
     }
     load();
 });
 async function startTwitterConnect() {
     const token = localStorage.getItem('bearerToken');
-    const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
+    const authUrl = `/twitter/authorizeUrl`;
     try {
         const response = await fetch(authUrl, {
             method: 'GET',

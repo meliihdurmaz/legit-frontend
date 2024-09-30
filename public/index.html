@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -122,35 +122,14 @@
 
 <body>
   <div class="container">
-    <h1>Hoşgeldiniz, <span id="username">Kullanıcı Adı</span></h1>
-    <p>Burada, profil bilgilerinizi güncelleyebilir ve diğer işlemleri yapabilirsiniz.</p>
+
 
 
     <div class="social-buttons">
       <button id="twitter-button" class="twitter-button" onclick="startTwitterConnect()">Twitter Bağla</button>
     </div>
-    <!-- <a href="/user/profile.html" class="button">Profilimi Güncelle</a>
-    <a href="/" class="button" id="logout-button">Çıkış Yap</a> -->
-    <div>
-      <button id="davet-button" class="button" onclick="createurl()">
-        <p>davet kodu oluştur</p>
-      </button>
-    </div>
-    <div class="invite-list">
-      <h2>Davetlerim</h2>
-      <div id="invites-container">
-        <!-- Davetler burada listelenecek -->
-      </div>
-    </div>
-    <div class="project-list">
-      <h2>proejeler</h2>
-      <div id="projects-container">
-        <!-- projeler burada listelenecek -->
-        <a href=""></a>
-      </div>
-    </div>
-    <h1>Fetch API ile Veri Çekme</h1>
-    <div id="result"></div>
+
+
   </div>
   <script>
     // function parseJwt(token) {
@@ -197,27 +176,36 @@
     //   }
     // });
     async function startTwitterConnect() {
-      const response = await fetch('https://3215-78-177-177-231.ngrok-free.app/twitter/authorizeUrl');
-      document.getElementById('result').innerHTML = "geldi";
-      if (!response.ok) {
-        document.getElementById('result').innerHTML = "1";
-        const errorText = await response.text(); // Hata mesajını al
-        throw new Error(`API isteği başarısız: ${response.status} - ${errorText}`);
+  const authUrl = `/twitter/authorizeUrl`;
+  try {
+    const response = await fetch(authUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
       }
+    });
 
-      // const data = await response.json();
-      document.getElementById('result').innerHTML = "2";
-      // document.getElementById('result').innerHTML = response;
-
-      const data = await response.json(); // JSON formatına çevir
-      const authUrl = data.auth_url;
-      window.location.href = authUrl;
-      // document.getElementById('result').innerHTML = "3";
-
-      // Gelen veriyi HTML'de göster
-      // document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
-
+    if (!response.ok) {
+      const errorText = await response.text(); // Hata metnini al
+      throw new Error(`API isteği başarısız: ${response.status} - ${errorText}`);
     }
+
+    const data = await response.json();
+
+    // Yanıt türünü kontrol et
+    if (typeof data === 'string') {
+      alert(data);
+      // localStorage.setItem('bearerToken', data);
+      // window.location = '../home/managerHome.html';
+    } else {
+      document.getElementById('login-error-message').innerText = 'Login failed: ' + (data.error || 'Unknown error');
+    }
+  } catch (error) {
+    console.error('Hata oluştu:', error);
+    document.getElementById('login-error-message').innerText = 'Bir hata oluştu: ' + error.message;
+  }
+}
+
   </script>
 </body>
 

@@ -38,6 +38,7 @@ function parseJwt(token) {
 
     return JSON.parse(jsonPayload);
 }
+
 app.get('/', (req, res) => {
     const token = req.query.token;
     print("deneme")
