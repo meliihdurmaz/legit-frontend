@@ -12,14 +12,12 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    const queryParams = req.query; // URL'deki query parametreleri
-    const token = queryParams.token; // Örneğin ?token=123 şeklinde bir parametre geldiğinde alır
+    const queryParams = req.query; 
+    const token = queryParams.token; 
 
     if (token) {
-        // Eğer token varsa bunu kullanarak işlem yapabilirsiniz
-        res.send(`Token alındı: ${token}`);
+        res.send(`Token alındı: ${req}`);
     } else {
-        // Token yoksa bir mesaj dönebilirsiniz
         res.send('Token yok. Ana sayfa açıldı.');
     }
 });
