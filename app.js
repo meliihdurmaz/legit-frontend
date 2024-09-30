@@ -23,8 +23,11 @@ app.get('/', (req, res) => {
     const queryParams = req.query;
     console.log(queryParams);
     // Örneğin, 'name' parametresini al
-    const bearerToken = queryParams.bearerToken;
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    const bearerToken = queryParams.token;
+    if (bearerToken) {
+        res.cookie('bearerToken', bearerToken, { httpOnly: true }); // httpOnly güvenli çerez
+    }
+    res.sendFile(path.join(__dirname, 'public', 'index.html}'));
 });
 
 app.get('/twitter/authorizeUrl', async (req, res) => {
