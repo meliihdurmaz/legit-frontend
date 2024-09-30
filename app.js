@@ -10,10 +10,10 @@ const serviceUrl = process.env.SERVICE_URL || 'https://8593-78-177-177-231.ngrok
 
 
 
-const token = '7642700137:AAGL1ptojbliCSLRgzIf0dlLBNd6LCtV368';
+// const token = '7642700137:AAGL1ptojbliCSLRgzIf0dlLBNd6LCtV368';
 
 // Telegram botunu başlat
-const bot = new TelegramBot(token, { polling: true });
+// const bot = new TelegramBot(token, { polling: true });
 
 const app = express();
 
