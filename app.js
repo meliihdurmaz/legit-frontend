@@ -2,11 +2,13 @@ const path = require('path');
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 const cors = require('cors');
+import fetch from 'node-fetch';
 
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 // const fetch = require('node-fetch');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const serviceUrl = process.env.SERVICE_URL || 'https://802f-78-177-177-231.ngrok-free.app/';
+// const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+// const serviceUrl = process.env.SERVICE_URL || 'https://802f-78-177-177-231.ngrok-free.app/';
 
 
 
@@ -27,6 +29,30 @@ const PORT = process.env.PORT || 3000;
 app.get('/', (req, res) => {
     // 'public/index.html' dosyasını gönder
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/twitter/authorizeUrl', async (req, res) => {
+    const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
+    
+    try {
+        const token = req.headers.authorization.split(' ')[1]; // Bearer token'ı alın
+        const response = await fetch(authUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            res.json(data); // Yetkilendirme URL'sini frontend'e gönderiyoruz
+        } else {
+            res.status(500).json({ error: 'Twitter connection failed: ' + response.statusText });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred: ' + error.message });
+    }
 });
 
 // Sunucuyu dinle
