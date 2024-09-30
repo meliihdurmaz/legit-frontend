@@ -11,10 +11,9 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
+app.get('/i', (req, res) => {
     const token = req.query.token;
-    alert(token);
-    res.sendFile(path.join(__dirname, 'public', 'homePage.html'));
+    res.send("Token alındı: "+token);
 
     // if (token) {
     //     res.send(`Token alındı: ${req.query.token}`);
