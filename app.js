@@ -6,7 +6,7 @@ const cors = require('cors');
 
 // const fetch = require('node-fetch');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const serviceUrl = process.env.SERVICE_URL || 'https://8593-78-177-177-231.ngrok-free.app/';
+const serviceUrl = process.env.SERVICE_URL || 'https://802f-78-177-177-231.ngrok-free.app/';
 
 
 
