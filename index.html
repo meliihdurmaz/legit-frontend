@@ -29,6 +29,7 @@
         // Telegram API'den kullanıcı bilgilerini almak için gerekli kod
         const queryParams = new URLSearchParams(window.location.search);
         console.log(queryParams);
+        
         const token = queryParams.get('token');
 
         const userInfoElement = document.getElementById('user-info');
