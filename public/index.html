@@ -137,15 +137,12 @@
     document.addEventListener('DOMContentLoaded', function () {
 
       const urlParams = new URLSearchParams(window.location.search);
-      document.getElementById('token').textContent = urlParams;
       const token = urlParams.get('token');
-      // window.location.href = '/asv.html';
-      // const token = localStorage.getItem('bearerToken');
-      // if (token) {
-      //   document.getElementById('token').textContent = token;
-      // } else {
-      //   document.getElementById('token').textContent = 'Token bulunamadı';
-      // }
+      if (token) {
+        document.getElementById('token').textContent = urlParams.getAll('token');
+      } else {
+        document.getElementById('token').textContent = 'Token bulunamadı';
+      }
     });
     // async function startTwitterConnect() {
     //   const token = localStorage.getItem('bearerToken');
