@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     const token = req.query.token;
+    alert(token);
     res.sendFile(path.join(__dirname, 'public', 'homePage.html'));
 
     // if (token) {
