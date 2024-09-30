@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
     if (token) {
         res.send(`Token alındı: ${req}`);
     } else {
-        res.send('Token yok. Ana sayfa açıldı.');
+        res.send(`Token alınmadı: ${req}`);
     }
 });
 
