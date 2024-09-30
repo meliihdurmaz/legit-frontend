@@ -121,7 +121,9 @@
 
 
 <body>
-  <div class="container">
+  <h1>URL Parametrelerini Alma</h1>
+  <p>Token: <span id="token"></span></p>
+  <!-- <div class="container">
 
 
 
@@ -130,45 +132,35 @@
     </div>
 
 
-  </div>
+  </div> -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-      const deneme=new URLSearchParams(window.location.href);
+      const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get('token');
-      window.location.href = '/asv.html';
+      // window.location.href = '/asv.html';
       // const token = localStorage.getItem('bearerToken');
-
       if (token) {
-        // Token'ı çözümle
-        const decodedToken = parseJwt(token);
-
+        document.getElementById('token').textContent = token;
       } else {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        if (token) {
-          localStorage.setItem('bearerToken', token);
-        } else {
-          alert('Lütfen giriş yapın.');
-          window.location.href = '/index.html';
-        }
+        document.getElementById('token').textContent = 'Token bulunamadı';
       }
     });
-    async function startTwitterConnect() {
-      const token = localStorage.getItem('bearerToken');
-      const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
+    // async function startTwitterConnect() {
+    //   const token = localStorage.getItem('bearerToken');
+    //   const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
 
-      fetch(authUrl, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          window.location.href = data[0];
-        })
-    }
+    //   fetch(authUrl, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Authorization': `Bearer ${token}`
+    //     }
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       window.location.href = data[0];
+    //     })
+    // }
 
   </script>
 </body>
