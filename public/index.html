@@ -153,25 +153,25 @@
     <div id="result"></div>
   </div>
   <script>
-    function parseJwt(token) {
-      console.log(token);
-      if (!token) {
-        throw new Error("Geçersiz token: Token boş veya null.");
-      }
-      // Token'ı '.' ile ayır ve ikinci parçayı (Payload) al
-      const base64Url = token.split('.')[1];
+    // function parseJwt(token) {
+    //   console.log(token);
+    //   if (!token) {
+    //     throw new Error("Geçersiz token: Token boş veya null.");
+    //   }
+    //   // Token'ı '.' ile ayır ve ikinci parçayı (Payload) al
+    //   const base64Url = token.split('.')[1];
 
-      // Base64 formatına uygun hale getir
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    //   // Base64 formatına uygun hale getir
+    //   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
 
-      // Base64'ten çözümlenmiş JSON verisini al
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
+    //   // Base64'ten çözümlenmiş JSON verisini al
+    //   const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+    //     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    //   }).join(''));
 
-      // JSON formatında döndür
-      return JSON.parse(jsonPayload);
-    }
+    //   // JSON formatında döndür
+    //   return JSON.parse(jsonPayload);
+    // }
     // document.addEventListener('DOMContentLoaded', function () {
     //   // localStorage'dan token'ı al
 
@@ -198,6 +198,7 @@
     // });
     async function startTwitterConnect() {
       const response = await fetch('https://802f-78-177-177-231.ngrok-free.app/twitter/authorizeUrl');
+      document.getElementById('result').innerHTML = "geldi";
       if (!response.ok) {
         const errorText = await response.text(); // Hata mesajını al
         throw new Error(`API isteği başarısız: ${response.status} - ${errorText}`);
