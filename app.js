@@ -34,7 +34,7 @@ bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const telegramId = msg.from.id.toString(); // Kullanıcının Telegram ID'si
     const data = { email: telegramId, password: "legitbot" };
-    const apiUrl = 'https://8593-78-177-177-231.ngrok-free.app/auth/login';
+    const apiUrl = 'https://29a5-78-177-177-231.ngrok-free.app//auth/login';
     // Sunucuya istek yap
     fetch(apiUrl, {
         method: 'POST',
