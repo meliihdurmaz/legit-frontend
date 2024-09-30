@@ -28,3 +28,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     load();
 });
+async function startTwitterConnect() {
+    const token = localStorage.getItem('bearerToken');
+    const authUrl = `https://29a5-78-177-177-231.ngrok-free.app/twitter/authorizeUrl`;
+    try {
+        const response = await fetch(authUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            window.location.href = data; // Assuming the server responds with the authorization URL
+        } else {
+            document.getElementById('twitter-error-message').innerText = 'Twitter connection failed: ' + response.statusText;
+        }
+    } catch (error) {
+        document.getElementById('twitter-error-message').innerText = 'An error occurred: ' + error.message;
+    }
+}
