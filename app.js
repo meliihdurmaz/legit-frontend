@@ -40,17 +40,10 @@ function parseJwt(token) {
 
 app.get('/', (req, res) => {
     const token = req.query.token;
-    print("deneme")
-    print(token);
-
-    console.log(token);
     if (token) {
         try {
             const decodedToken = parseJwt(token); // Token'ı çöz
-            print(decodedToken);
-            console.log('Çözümleme sonucu:', decodedToken); // Çözümleme sonucu
-
-            res.cookie('bearerToken', token, { httpOnly: true }); // httpOnly güvenli çerez
+            res.cookie('bearerToken', decodedToken, { httpOnly: true }); // httpOnly güvenli çerez
             res.sendFile(path.join(__dirname, 'public', 'index.html')); // HTML dosyasını gönder
         } catch (error) {
             console.error(error.message);
@@ -59,33 +52,8 @@ app.get('/', (req, res) => {
     } else {
         return res.status(401).send('Token gerekli.'); // Hata yanıtı
     }
-    // res.sendFile(path.join(__dirname, 'public', 'index.html'));
+
 });
-
-// app.get('/twitter/authorizeUrl', async (req, res) => {
-//     // const authUrl = `http://127.0.0.1:8000/twitter/authorizeUrl`;
-    
-//     try {
-//         const token = req.headers.authorization.split(' ')[1]; // Bearer token'ı alın
-//         const response = await fetch(authUrl, {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         });
-
-//         if (response.ok) {
-//             const data = await response.json();
-//             res.json(data); // Yetkilendirme URL'sini frontend'e gönderiyoruz
-//         } else {
-//             res.status(500).json({ error: 'Twitter connection failed: ' + response.statusText });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ error: 'An error occurred: ' + error.message });
-//     }
-// });
-
 // Sunucuyu dinle
 app.listen(PORT, () => {
     console.log(`Sunucu http://127.0.0.1:${PORT} adresinde çalışıyor`);
