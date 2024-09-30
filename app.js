@@ -20,6 +20,10 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     // 'public/index.html' dosyasını gönder
+    const queryParams = req.query;
+    console.log(queryParams);
+    // Örneğin, 'name' parametresini al
+    const bearerToken = queryParams.bearerToken;
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
