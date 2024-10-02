@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        // Sayfa yüklendiğinde çalışacak fonksiyon
         function getTokenFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('token');  // ?token= kısmındaki değeri alır
         }
+        // Sayfa yüklendiğinde çalışacak fonksiyon
+        window.onload = function () {
+            const token = getTokenFromUrl();
+            if (token) {
+                // Token'ı localStorage'a kaydet
+                localStorage.setItem('token', token);
+                console.log("Token localStorage'a kaydedildi:", token);
+            } else {
+                console.error("Token bulunamadı.");
+            }
+            // LocalStorage'dan token'i al
+
+            // Ekrana yazdır
+            const tokenDisplay = document.getElementById('tokenDisplay');
+            if (token) {
+                tokenDisplay.innerText = `Token: ${token}`;
+            } else {
+                tokenDisplay.innerText = 'Token bulunamadı.';
+            }
+        };
         const token = getTokenFromUrl();
         if (token) {
             // Token'ı localStorage'a kaydet
@@ -18,10 +38,14 @@
         } else {
             console.error("Token bulunamadı.");
         }
+
+
     </script>
 </head>
+
 <body>
     <h1>Token Ekranı</h1>
     <div id="tokenDisplay"></div>
 </body>
+
 </html>
