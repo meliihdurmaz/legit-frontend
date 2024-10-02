@@ -1,51 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script>
-        function getTokenFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('token');  // ?token= kısmındaki değeri alır
-        }
-        // Sayfa yüklendiğinde çalışacak fonksiyon
-        window.onload = function () {
-            const token = getTokenFromUrl();
-            if (token) {
-                // Token'ı localStorage'a kaydet
-                localStorage.setItem('token', token);
-                console.log("Token localStorage'a kaydedildi:", token);
-            } else {
-                console.error("Token bulunamadı.");
-            }
-            // LocalStorage'dan token'i al
-
-            // Ekrana yazdır
-            const tokenDisplay = document.getElementById('tokenDisplay');
-            if (token) {
-                tokenDisplay.innerText = `Token: ${token}`;
-            } else {
-                tokenDisplay.innerText = 'Token bulunamadı.';
-            }
-        };
-        const token = getTokenFromUrl();
-        if (token) {
-            // Token'ı localStorage'a kaydet
-            localStorage.setItem('token', token);
-            console.log("Token localStorage'a kaydedildi:", token);
-        } else {
-            console.error("Token bulunamadı.");
+    <title>Kullanıcı Ana Sayfası</title>
+    <style>
+        /* Genel sayfa düzeni */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
+        /* Ana kart düzeni */
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
 
-    </script>
+        /* Başlık ve kullanıcı adı stili */
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .username {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* Çıkış yap butonu stili */
+        .logout-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #ff1a1a;
+        }
+
+        /* Görevler alanı */
+        .tasks {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .tasks h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .task-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .task-list li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .task-list li span {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Yükleniyor yazısı için animasyon */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
 </head>
-
 <body>
-    <h1>Token Ekranı</h1>
-    <div id="tokenDisplay"></div>
-</body>
+    <div class="container">
+        <h1>Kullanıcı Ana Sayfası</h1>
+        <p class="username" id="usernameDisplay">Kullanıcı: Yükleniyor...</p>
+        <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
 
+        <div class="tasks">
+            <h2>Görevler</h2>
+            <ul class="task-list" id="taskList">
+                <li><span>Yükleniyor...</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde kullanıcı bilgilerini ve görevlerini çek
+        window.onload = function() {
+            function getTokenFromUrl() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('token');
+            }
+
+            const token = getTokenFromUrl();
+
+            if (token) {
+                fetchUserData(token);
+            } else {
+                document.getElementById("usernameDisplay").textContent = "Token bulunamadı.";
+            }
+        }
+
+        // API isteği ile kullanıcı bilgilerini ve görevlerini al
+        function fetchUserData(token) {
+            fetch('/api/user-info', { // API endpoint burada belirtilmeli
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.username) {
+                    document.getElementById("usernameDisplay").textContent = "Kullanıcı: " + data.username;
+                    populateTasks(data.tasks);
+                } else {
+                    document.getElementById("usernameDisplay").textContent = "Kullanıcı bilgisi alınamadı.";
+                }
+            })
+            .catch(error => {
+                console.error('Kullanıcı bilgisi çekilirken hata oluştu:', error);
+                document.getElementById("usernameDisplay").textContent = "Bilgi çekilemedi.";
+            });
+        }
+
+        // Görevleri sayfada listele
+        function populateTasks(tasks) {
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = ''; // Önce listeyi temizle
+            if (tasks && tasks.length > 0) {
+                tasks.forEach(task => {
+                    const taskItem = document.createElement('li');
+                    taskItem.innerHTML = `<span>${task.name}</span><span>${task.completed ? '✅' : '❌'}</span>`;
+                    taskList.appendChild(taskItem);
+                });
+            } else {
+                taskList.innerHTML = '<li><span>Görev yok.</span></li>';
+            }
+        }
+
+        // Çıkış yapma işlevi
+        function logout() {
+            alert("Çıkış yapılıyor...");
+            // Çıkış işlemini gerçekleştir ve login sayfasına yönlendir
+            window.location.href = "/login";
+        }
+    </script>
+</body>
 </html>

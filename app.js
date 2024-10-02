@@ -12,7 +12,7 @@ app.use(cors({ origin: '*' }));
 app.use(express.static('public')); 
 
 app.get('/', (req, res) => {
-    token=req.params.token;
+    // token=req.params.token;
     res.sendFile(__dirname + '/public/index.html');
 });
 
