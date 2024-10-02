@@ -6,18 +6,18 @@
     <title>Document</title>
     <script>
         // Sayfa yüklendiğinde çalışacak fonksiyon
-        window.onload = function() {
-            // LocalStorage'dan token'i al
-            const token = localStorage.getItem('token');
-
-            // Ekrana yazdır
-            const tokenDisplay = document.getElementById('tokenDisplay');
-            if (token) {
-                tokenDisplay.innerText = `Token: ${token}`;
-            } else {
-                tokenDisplay.innerText = 'Token bulunamadı.';
-            }
-        };
+        function getTokenFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('token');  // ?token= kısmındaki değeri alır
+        }
+        const token = getTokenFromUrl();
+        if (token) {
+            // Token'ı localStorage'a kaydet
+            localStorage.setItem('token', token);
+            console.log("Token localStorage'a kaydedildi:", token);
+        } else {
+            console.error("Token bulunamadı.");
+        }
     </script>
 </head>
 <body>

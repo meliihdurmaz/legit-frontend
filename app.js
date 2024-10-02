@@ -4,16 +4,16 @@ const cors = require('cors');
 
 // const port = 3000;
 
-// Gerekli middleware
+// G0erekli middleware
 // app.use(express.static('public'));
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
-app.get('/', (req, res) => {
-    // console.log(req.query.token);
-    localStorage.setItem('token', req.query.token);
+app.use(express.static('public')); 
 
-    res.send('/public/index.html');
+app.get('/', (req, res) => {
+    token=req.params.token;
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 
