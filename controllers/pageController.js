@@ -1,3 +1,4 @@
+const axios = require('axios');
 
 exports.getHomePage = function (req, res) {
     const token = req.query.token;
@@ -14,7 +15,7 @@ exports.getHomePage = function (req, res) {
             console.log('GET İsteği Başarılı:', response.data);
             res.render('home', {
                 title: 'Home',
-                response: response
+                response: response.data
             });
         })
         .catch((error) => {
