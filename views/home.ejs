@@ -1,17 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <!-- Axios'u ekliyoruz -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
     <h1>Welcome to the Home Page</h1>
     <h2>User Information</h2>
-    <p><strong>Email:</strong> <%= response.email %></p>
-    <p><strong>Role:</strong> <%= response.role %></p>
+    <p><strong>Email:</strong>
+        <%= response.email %>
+    </p>
+    <p><strong>Role:</strong>
+        <%= response.role %>
+    </p>
+    <button id="twitterButton">Twitter Hesabı Ekle</button>
 
+    <script>
+        // Buton tıklama olayını dinleme
+        document.getElementById('twitterButton').addEventListener('click', function () {
+            const token = "<%= token %>";  // Backend'den gelen token'ı kullan
+
+            // Backend'e Twitter ekleme isteği gönderen fonksiyonu çağır
+            addTwitterAccount(token);
+        });
+
+        // Twitter hesabı ekleme fonksiyonu
+        function addTwitterAccount(token) {
+            console.log('Token:', token);
+            // Axios ile POST isteği
+            axios.post('/twitter/add', {
+                token: token
+            })
+                .then(function (response) {
+                    // Başarılı yanıt geldiğinde Twitter yetkilendirme URL'sine yönlendir
+                    window.open(response.data.twitterAuthorizeUrl, '_blank');  // Yeni pencerede aç
+                })
+                .catch(function (error) {
+                    alert('Twitter hesabı eklenirken bir hata oluştu.');
+                    console.error('Error:', error.response ? error.response.data : error.message);
+                });
+        }
+    </script>
 </body>
+
 </html>
