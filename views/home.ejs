@@ -33,7 +33,8 @@
             }).then(response => {
                 console.log(response.data);
                 const redirectUrl = response.data.redirectUrl; // Yönlendirme URL'sini al
-                window.location.href = redirectUrl
+                console.log(redirectUrl);
+                window.location.href = redirectUrl;  // Yönlendirme yap
             }).catch(error => {
                 console.error(error);
             });
