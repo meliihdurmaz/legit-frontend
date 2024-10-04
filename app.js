@@ -1,18 +1,10 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const axios = require('axios');
 
-// const port = 3000;
 
-// G0erekli middleware
-// app.use(express.static('public'));
+const app = express();
 
-// app.use(cors({
-//     origin: '*',  // Tüm originlere izin veriyor (güvenlik gereği sadece belirli origin'lere izin vermek daha iyi olur)
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // İzin verilen HTTP metodları
-//     allowedHeaders: ['Content-Type', 'Authorization'],  // İzin verilen başlıklar
-// }));
 
 app.use(express.json());
 
@@ -20,28 +12,25 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-app.use(cors({
-    origin: 'https://telagramapplegit-a55c4719cc06.herokuapp.com/', // Frontend sunucusunun URL'sini belirtin
-    credentials: true,
-}));
+app.use(cors()); // CORS'u kullan
 
 app.get('/', (req, res) => {
-    token=req.params.token;
+    const token = req.params.token; // Token'ı alın
     const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
-    axios.get(hedefURL,{
+    axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
     })
         .then((response) => {
-            console.log('POST İsteği Başarılı:', response);
+            console.log('GET İsteği Başarılı:', response.data);
         })
         .catch((error) => {
-            console.error('POST İsteği Hatası:', error);
+            console.error('GET İsteği Hatası:', error);
         });
 
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/index.html'); // HTML dosyasını gönder
 });
 
 
