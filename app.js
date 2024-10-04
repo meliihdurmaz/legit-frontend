@@ -16,35 +16,26 @@ app.use(cors({
 
 app.use(express.json());
 
-const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
-axios.get(hedefURL)
-    .then((response) => {
-        console.log('POST İsteği Başarılı:', response);
-    })
-    .catch((error) => {
-        console.error('POST İsteği Hatası:', error);
-    });
 
-// app.get('/user/me', (req, res) => {
-//     const token = req.headers.authorization;  // Bearer token alınması
-//     if (!token) {
-//         return res.status(401).json({ error: "Token eksik" });
-//     }
-
-//     // Token doğrulama işlemi ve kullanıcı bilgisi döndürme
-//     res.json({
-//         username: "legit_user",
-//         tasks: [
-//             { name: "Görev 1", completed: false },
-//             { name: "Görev 2", completed: true }
-//         ]
-//     });
-// });
 
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    // token=req.params.token;
+    token=req.params.token;
+    const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
+    axios.get(hedefURL,{
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            console.log('POST İsteği Başarılı:', response);
+        })
+        .catch((error) => {
+            console.error('POST İsteği Hatası:', error);
+        });
+
     res.sendFile(__dirname + '/public/index.html');
 });
 
