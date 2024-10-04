@@ -136,13 +136,24 @@
 
         // API isteği ile kullanıcı bilgilerini ve görevlerini al
         function fetchUserData(token) {
-            fetch('https://7536-78-177-177-231.ngrok-free.app/user/me', {
-                method: 'GET',
+            axios.get('https://7536-78-177-177-231.ngrok-free.app/user/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
-            }).then(response => console.log(response)) 
+            })
+            .then(response => console.log(response))
+            .catch(error => {
+                console.error('Kullanıcı bilgisi çekilirken hata oluştu:', error);
+                document.getElementById("usernameDisplay").textContent = "Bilgi çekilemedi.";
+            });
+            // fetch('https://7536-78-177-177-231.ngrok-free.app/user/me', {
+            //     method: 'GET',
+            //     headers: {
+            //         'Authorization': `Bearer ${token}`,
+            //         'Content-Type': 'application/json'
+            //     }
+            // }).then(response => console.log(response)) 
 
             // fetch('https://7536-78-177-177-231.ngrok-free.app/user/me', { // API endpoint burada belirtilmeli
             //     method: 'GET',
