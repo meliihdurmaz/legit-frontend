@@ -12,10 +12,10 @@ exports.getHomePage = function (req, res) {
     })
         .then((response) => {
             // res.send(response); // Kullanıcı bilgilerini geri gönder
-            console.log('GET İsteği Başarılı:', response);
+            console.log('GET İsteği Başarılı:', response.data);
             res.render('home', {
                 title: 'Home',
-                response: response
+                response: response.data
             });
         })
         .catch((error) => {
