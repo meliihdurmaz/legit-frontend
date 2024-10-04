@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= title %></title>
+    <!-- Axios'u ekliyoruz -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
-
 <body>
-    <p>merhaba</p>
-    <div id="user-info"></div>
+    <h1>Welcome to the Home Page</h1>
+    <p>Token: <%= token %></p>
+
+    <!-- Axios çağrısı yapacağımız bir buton -->
+    <button id="requestData">Request Data</button>
+
+    <script>
+        // Token'ı alıyoruz
+        const token = "<%= token %>";
+        
+        // Buton tıklandığında Axios ile istek yapıyoruz
+        document.getElementById('requestData').addEventListener('click', function() {
+            axios.get('/api/someEndpoint', {
+                params: {
+                    token: token
+                }
+            })
+            .then(function (response) {
+                console.log('Data:', response.data);
+                alert('Data received: ' + JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.error('Error fetching data:', error);
+            });
+        });
+    </script>
 </body>
-<script>
-    // const token = "your_token"; // Gerçek token değerini buraya ekleyin
-    const token = "<%= token %>"; // EJS'den alınan token
-
-    // API'den kullanıcı bilgilerini alma
-    axios.get('https://7536-78-177-177-231.ngrok-free.app/user/me', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        // Kullanıcı bilgilerini gösterme
-        document.getElementById('user-info').innerText = JSON.stringify(response.data, null, 2);
-    })
-    .catch(error => {
-        console.error('API çağrısı hatası:', error);
-    });
-</script>
-
 </html>
