@@ -37,7 +37,7 @@ exports.addTwitterAccount = function (req, res) {
     })
         .then((response) => {
             console.log('GET İsteği Başarılı:', response.data);
-            const redirectUrl = response.data;
+            const redirectUrl = response.data[0];
             res.redirect(redirectUrl);
         })
         .catch((error) => {
