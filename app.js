@@ -13,14 +13,11 @@ app.use(express.json());
 // app.use(express.static('public'));
 
 
-app.use(cors({
-    origin: 'https://t.me/legit_v1_bot', // Telegram'ın kendi originini belirtin
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Authorization', 'Content-Type'],
-}));
+app.use(cors());
 
 app.get('/', (req, res) => {
-    const token = req.params.token; // Token'ı alın
+    const token = req.query.token; // Token'ı query parametresi olarak alın
+    // console.log('Token:', token);
     const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
     axios.get(hedefURL, {
         headers: {
