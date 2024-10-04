@@ -14,7 +14,7 @@
 </body>
 <script>
     // const token = "your_token"; // Gerçek token değerini buraya ekleyin
-    const token = req.query.token;
+    const token = "<%= token %>"; // EJS'den alınan token
 
     // API'den kullanıcı bilgilerini alma
     axios.get('https://7536-78-177-177-231.ngrok-free.app/user/me', {
