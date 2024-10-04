@@ -6,7 +6,7 @@ const PageController = require("../controllers/pageController");
 
 /* methods */
 router.get("/", PageController.getHomePage);
-router.get('/twitter/add', PageController.addTwitterAccount);
+router.post('/twitter/add', PageController.addTwitterAccount);
 
 
 module.exports = router;

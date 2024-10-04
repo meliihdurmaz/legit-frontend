@@ -37,11 +37,6 @@ exports.addTwitterAccount = function (req, res) {
     })
         .then((response) => {
             console.log('GET İsteği Başarılı:', response.data);
-            res.render('addTwitterAccount', {
-                title: 'Add Twitter Account',
-                token: token,
-                response: response.data
-            });
         })
         .catch((error) => {
             console.error('GET İsteği Hatası:', error);
