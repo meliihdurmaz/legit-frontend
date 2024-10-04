@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const axios = require('axios');
 
 // const port = 3000;
 
@@ -14,6 +15,15 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
+axios.get(hedefURL)
+    .then((response) => {
+        console.log('POST İsteği Başarılı:', response);
+    })
+    .catch((error) => {
+        console.error('POST İsteği Hatası:', error);
+    });
 
 // app.get('/user/me', (req, res) => {
 //     const token = req.headers.authorization;  // Bearer token alınması
@@ -31,7 +41,7 @@ app.use(express.json());
 //     });
 // });
 
-app.use(express.static('public')); 
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     // token=req.params.token;
