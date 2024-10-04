@@ -9,19 +9,22 @@
     </title>
     <!-- Axios'u ekliyoruz -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
 </head>
 
 <body>
     <h1>Welcome to the Home Page</h1>
     <h2>User Information</h2>
     <p><strong>Email:</strong>
-        <%= typeof response !== 'undefined' ? response.email : 'N/A' %>
+        <%= typeof response !=='undefined' ? response.email : 'N/A' %>
     </p>
     <p><strong>Role:</strong>
-        <%= typeof response !== 'undefined' ? response.role : 'N/A' %>
+        <%= typeof response !=='undefined' ? response.role : 'N/A' %>
     </p>
     <button id="twitterButton">Twitter Hesabı Ekle</button>
-    
+    <button id="connectButton">MetaMask ile Giriş Yap</button>
+
     <script>
         // Buton tıklama olayını dinleme
         document.getElementById('twitterButton').addEventListener('click', function () {
@@ -43,6 +46,31 @@
                 console.error('Token is not defined');
             }
         });
+    </script>
+    <script>
+        async function connectMetaMask() {
+            // Kullanıcının MetaMask uzantısının yüklü olup olmadığını kontrol et
+            if (typeof window.ethereum !== 'undefined') {
+                // Web3 nesnesini oluştur
+                const web3 = new Web3(window.ethereum);
+
+                try {
+                    // Kullanıcıdan cüzdanına bağlanması için izin iste
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    console.log('Bağlanan cüzdan adresi:', accounts[0]);
+                } catch (error) {
+                    // İzin hatasını yakala ve konsola yazdır
+                    console.error("İzin hatası:", error);
+                    alert("MetaMask ile bağlanma isteği reddedildi. Hata: " + error.message);
+                }
+            } else {
+                // MetaMask yüklenmemişse kullanıcıyı bilgilendir
+                alert('Lütfen MetaMask\'i yükleyin.');
+            }
+        }
+
+        // Bağlantıyı başlatmak için bir buton ekleyin
+        document.getElementById('connectButton').addEventListener('click', connectMetaMask);
     </script>
 </body>
 

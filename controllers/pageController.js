@@ -3,7 +3,7 @@ const axios = require('axios');
 exports.getHomePage = function (req, res) {
     const token = req.query.token;
 
-    const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
+    const hedefURL = 'https://db92-159-146-81-160.ngrok-free.app/user/me';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -28,7 +28,7 @@ exports.getHomePage = function (req, res) {
 
 exports.addTwitterAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/twitter/authorizeUrl';
+    const hedefURL = 'https://db92-159-146-81-160.ngrok-free.app/twitter/authorizeUrl';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
