@@ -123,20 +123,18 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get('token');
             }
-
             const token = getTokenFromUrl();
 
             if (token) {
                 fetchUserData(token);
             } else {
-                fetchUserData(token);
                 document.getElementById("usernameDisplay").textContent = "Token bulunamadı.";
             }
         }
 
         // API isteği ile kullanıcı bilgilerini ve görevlerini al
         function fetchUserData(token) {
-            fetch('https://6f19-159-146-81-160.ngrok-free.app/user/me', { // API endpoint burada belirtilmeli
+            fetch('https://7536-78-177-177-231.ngrok-free.app/user/me', { // API endpoint burada belirtilmeli
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token
