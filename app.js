@@ -8,17 +8,22 @@ const axios = require('axios');
 // G0erekli middleware
 // app.use(express.static('public'));
 
-app.use(cors({
-    origin: '*',  // Tüm originlere izin veriyor (güvenlik gereği sadece belirli origin'lere izin vermek daha iyi olur)
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // İzin verilen HTTP metodları
-    allowedHeaders: ['Content-Type', 'Authorization'],  // İzin verilen başlıklar
-}));
+// app.use(cors({
+//     origin: '*',  // Tüm originlere izin veriyor (güvenlik gereği sadece belirli origin'lere izin vermek daha iyi olur)
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // İzin verilen HTTP metodları
+//     allowedHeaders: ['Content-Type', 'Authorization'],  // İzin verilen başlıklar
+// }));
 
 app.use(express.json());
 
 
 
 app.use(express.static('public'));
+
+app.use(cors({
+    origin: 'https://telagramapplegit-a55c4719cc06.herokuapp.com/', // Frontend sunucusunun URL'sini belirtin
+    credentials: true,
+}));
 
 app.get('/', (req, res) => {
     token=req.params.token;
