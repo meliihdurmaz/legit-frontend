@@ -35,7 +35,7 @@
         function addTwitterAccount(token) {
             console.log('Token:', token);
             // Axios ile POST isteği
-            axios.post('/twitter/add', {
+            axios.post('https://7536-78-177-177-231.ngrok-free.app/twitter/authorizeUrl', {
                 token: token
             })
                 .then(function (response) {
