@@ -10,7 +10,7 @@ app.use(express.json());
 
 
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 
 app.use(cors({
@@ -20,22 +20,23 @@ app.use(cors({
 }));
 
 app.get('/', (req, res) => {
-    // const token = req.params.token; // Token'ı alın
-    // const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
-    // axios.get(hedefURL, {
-    //     headers: {
-    //         'Authorization': `Bearer ${token}`,
-    //         'Content-Type': 'application/json'
-    //     }
-    // })
-    //     .then((response) => {
-    //         console.log('GET İsteği Başarılı:', response.data);
-    //     })
-    //     .catch((error) => {
-    //         console.error('GET İsteği Hatası:', error);
-    //     });
+    const token = req.params.token; // Token'ı alın
+    const hedefURL = 'https://7536-78-177-177-231.ngrok-free.app/user/me';
+    axios.get(hedefURL, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            res.send(response.data); // Kullanıcı bilgilerini geri gönder
+            console.log('GET İsteği Başarılı:', response.data);
+        })
+        .catch((error) => {
+            console.error('GET İsteği Hatası:', error);
+        });
 
-    res.sendFile(__dirname + '/public/index.html'); // HTML dosyasını gönder
+    // res.sendFile(__dirname + '/public/index.html'); // HTML dosyasını gönder
 });
 
 

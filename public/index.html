@@ -108,7 +108,7 @@
     <div class="container">
         <h1>Kullanıcı Ana Sayfası</h1>
         <p class="username" id="usernameDisplay">Kullanıcı: Yükleniyor...</p>
-        <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+        <button class="logout-btn" >Çıkış Yap</button>
 
         <div class="tasks">
             <h2>Görevler</h2>
@@ -177,28 +177,6 @@
             //         document.getElementById("usernameDisplay").textContent = "Bilgi çekilemedi.";
             //     });
         
-
-        // Görevleri sayfada listele
-        function populateTasks(tasks) {
-            const taskList = document.getElementById("taskList");
-            taskList.innerHTML = ''; // Önce listeyi temizle
-            if (tasks && tasks.length > 0) {
-                tasks.forEach(task => {
-                    const taskItem = document.createElement('li');
-                    taskItem.innerHTML = `<span>${task.name}</span><span>${task.completed ? '✅' : '❌'}</span>`;
-                    taskList.appendChild(taskItem);
-                });
-            } else {
-                taskList.innerHTML = '<li><span>Görev yok.</span></li>';
-            }
-        }
-
-        // Çıkış yapma işlevi
-        function logout() {
-            alert("Çıkış yapılıyor...");
-            // Çıkış işlemini gerçekleştir ve login sayfasına yönlendir
-            window.location.href = "/login";
-        }
     </script>
 </body>
 
