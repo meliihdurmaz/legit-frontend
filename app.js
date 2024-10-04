@@ -12,7 +12,12 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-app.use(cors()); // CORS'u kullan
+
+app.use(cors({
+    origin: 'https://t.me/legit_v1_bot', // Telegram'ın kendi originini belirtin
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Authorization', 'Content-Type'],
+}));
 
 app.get('/', (req, res) => {
     const token = req.params.token; // Token'ı alın
