@@ -6,18 +6,30 @@ const cors = require('cors');
 
 // G0erekli middleware
 // app.use(express.static('public'));
-app.use(express.json());
-app.use(cors({ origin: '*' }));
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//     if (req.method === 'OPTIONS') {
-//       return res.sendStatus(200);
+app.use(cors({
+    origin: '*',  // Tüm originlere izin veriyor (güvenlik gereği sadece belirli origin'lere izin vermek daha iyi olur)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // İzin verilen HTTP metodları
+    allowedHeaders: ['Content-Type', 'Authorization'],  // İzin verilen başlıklar
+}));
+
+app.use(express.json());
+
+// app.get('/user/me', (req, res) => {
+//     const token = req.headers.authorization;  // Bearer token alınması
+//     if (!token) {
+//         return res.status(401).json({ error: "Token eksik" });
 //     }
-//     next();
-//   });
-  
+
+//     // Token doğrulama işlemi ve kullanıcı bilgisi döndürme
+//     res.json({
+//         username: "legit_user",
+//         tasks: [
+//             { name: "Görev 1", completed: false },
+//             { name: "Görev 2", completed: true }
+//         ]
+//     });
+// });
 
 app.use(express.static('public')); 
 
