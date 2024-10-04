@@ -9,30 +9,10 @@
 </head>
 <body>
     <h1>Welcome to the Home Page</h1>
-    <p>Token: <%= token %></p>
+    <p>response: <%= response %></p>
 
     <!-- Axios çağrısı yapacağımız bir buton -->
     <button id="requestData">Request Data</button>
 
-    <script>
-        // Token'ı alıyoruz
-        const token = "<%= token %>";
-        
-        // Buton tıklandığında Axios ile istek yapıyoruz
-        document.getElementById('requestData').addEventListener('click', function() {
-            axios.get('https://7536-78-177-177-231.ngrok-free.app/user/me', {
-                params: {
-                    token: token
-                }
-            })
-            .then(function (response) {
-                console.log('Data:', response.data);
-                alert('Data received: ' + JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                console.error('Error fetching data:', error);
-            });
-        });
-    </script>
 </body>
 </html>
