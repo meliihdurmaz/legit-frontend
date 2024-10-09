@@ -57,22 +57,17 @@
                     // Kullanıcıdan izin isteyin
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                     const userAccount = accounts[0];
-                    axios.post('/metamask/nonce', { userAccount }, {
+                    const response = await axios.post('/metamask/nonce', { userAccount }, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
-                    }).then(response => {
-                        // Sunucudan dönen yanıtı burada işleyin
-                        console.log("Nonce değeri:", response.data); // Yanıt verisini console'a yazdır
-                    }).catch(error => {
-                        // Hata durumunda burada işleyin
-                        console.error("Hata:", error); // Hata mesajını console'a yazdır
                     });
-                    // console.log("Nonce değeri:", response.JSON());
-                    // const nonce = response.data.nonce;
-                    const nonce = 1;
+                    // console.log(response.data.signedMessage)
+                    const nonce = response.data.signedMessage;
+                    const publicKey = response.data.publicKey;
 
-
+                    // console.log("Kullanıcı hesabı:", nonce);
+                    
                     const msgParams = JSON.stringify({
                         domain: {
                             chainId: 1,
@@ -120,10 +115,15 @@ ${nonce}
                         params: [userAccount, msgParams, nonce],
                     });
                     console.log("İmzalanan veri:", signature);
+
+
+
+                    
                     axios.post('/metamask/add', {
                         nonce: nonce,  // Nonce değeri
                         signature: signature,  // İmzalanmış veri
-                        walletAddress: userAccount // Kullanıcının cüzdan adresi
+                        walletAddress: userAccount, // Kullanıcının cüzdan adresi
+                        publicKey: publicKey
                     }, {
                         headers: {
                             'Authorization': `Bearer ${token}`, // Gerekli token varsa ekleyin

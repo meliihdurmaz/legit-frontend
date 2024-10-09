@@ -60,11 +60,12 @@ exports.addMetaMaskAccount = async function (req, res) {
     const signature = req.body.signature;
     const nonce = req.body.nonce;
     const walletAddress = req.body.walletAddress;
+    const publicKey = req.body.publicKey;
 
 
     const hedefURL = 'https://3638-78-177-177-231.ngrok-free.app/metamask/add';
     try {
-        const response = await axios.post(hedefURL, { signature, nonce, walletAddress }, {  // req.body'yi doğrudan gönderiyoruz
+        const response = await axios.post(hedefURL, { signature, nonce, walletAddress, publicKey }, {  // req.body'yi doğrudan gönderiyoruz
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -77,64 +78,28 @@ exports.addMetaMaskAccount = async function (req, res) {
     }
 };
 
-exports.signMessage = async function (req, res) {
-    const token = req.query.token; // JWT token
-    const walletAddress = req.query.walletAddress;
-    const decodedToken = jwt.verify(token, '4w7gTDF9yc4uH6HO8O4Dx9ILeg60SjhdN4995yWB');  // JWT için gizli anahtar
-    const userId = decodedToken.id;
-
-
-
-
-    const msg = `Sign this message to authenticate with user ID: ${userId}`;
-
-
-
-
-
-    if (!signedMessage || !walletAddress) {
-        return res.status(400).json({ message: 'Invalid signing process.' });
-    }
-    const base64SignedMessage = Buffer.from(signedMessage).toString('base64');
-    const base64PublicKey = Buffer.from(publicKeyPair).toString('base64');
-    const payload = {
-        signedMessage: base64SignedMessage,          // Base64 formatında imzalı mesaj
-        accountAddress: walletAddress,               // Hesap adresi
-        signaturePublicKey: base64PublicKey,         // Public key'i Base64 olarak kodla
-    };
-
-    try {
-        const response = await axios.post('https://3638-78-177-177-231.ngrok-free.app/metamask/add', payload, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log("Decrypted Message from FastAPI:", response.data.decrypted_message);
-        res.json({ decryptedMessage: response.data.decrypted_message });
-    } catch (error) {
-        console.error("Error:", error.response.data);
-        res.status(500).json({ message: 'An error occurred during the signing process.' });
-    }
-};
-
 function signNonce(nonce, secretKey) {
     const keypair = nacl.sign.keyPair.fromSecretKey(Buffer.from(secretKey));
     const nonceBuffer = new TextEncoder().encode(nonce);
     const signature = nacl.sign.detached(nonceBuffer, keypair.secretKey);
-    return { signature: Buffer.from(signature).toString('hex'), publicKey: Buffer.from(keypair.publicKey).toString('hex') };
+    return {
+        signature: Buffer.from(signature).toString('hex'),
+        publicKey: Buffer.from(keypair.publicKey).toString('hex')
+    };
 }
+
 exports.nonceMetaMaskAccount = async function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
     console.log(req.body);
-    const walletAddress = req.body.accounts;
+    const walletAddress = req.body.walletAddress; // Doğru anahtar
+    const nonce = req.body.nonce; // Gelen nonce değerini al
+
     const keypair = nacl.sign.keyPair();
-    const { signature, publicKey } = signNonce(walletAddress, keypair.secretKey);
-    console.log("Imzalı Nonce:", signature);
-    console.log("Açık Anahtar:", publicKey);
+    const { signature, publicKey } = signNonce(nonce, keypair.secretKey); // Burada nonce'u imzalıyoruz
+
     return res.json({
-        publicKey: Array.from(publicKey), // Public key'i döndür
-        signedMessage: Array.from(signature), // İmzalı mesajı döndür
+        publicKey: publicKey, // Public key'i döndür
+        signedMessage: signature, // İmzalı mesajı döndür
         walletAddress: walletAddress // Cüzdan adresini döndür
     });
 };
