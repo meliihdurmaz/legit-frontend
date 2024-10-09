@@ -23,8 +23,8 @@
         <%= typeof response !=='undefined' ? response.role : 'N/A' %>
     </p>
     <button id="twitterButton">Twitter Hesabı Ekle</button>
-    <h3>Sign typed data v4</h3>
-    <button type="button" id="connectMetamask">eth_signTypedData_v4</button>
+    <h3>Connect Metamask</h3>
+    <button type="button" id="connectMetamask">Connect Metamask</button>
 
     <script>
         // Buton tıklama olayını dinleme
@@ -51,14 +51,28 @@
     <script>
         async function connectMetamask() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+
             if (window.ethereum) {
                 try {
-                    const keyPair = nacl.sign.keyPair();
                     // Kullanıcıdan izin isteyin
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                     const userAccount = accounts[0];
-                    const nonce = "123456"; // Nonce değeri
-                    // alert("MetaMask hesabı bağlandı: " + userAccount);
+                    axios.post('/metamask/nonce', { userAccount }, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }).then(response => {
+                        // Sunucudan dönen yanıtı burada işleyin
+                        console.log("Nonce değeri:", response.data); // Yanıt verisini console'a yazdır
+                    }).catch(error => {
+                        // Hata durumunda burada işleyin
+                        console.error("Hata:", error); // Hata mesajını console'a yazdır
+                    });
+                    // console.log("Nonce değeri:", response.JSON());
+                    // const nonce = response.data.nonce;
+                    const nonce = 1;
+
+
                     const msgParams = JSON.stringify({
                         domain: {
                             chainId: 1,
@@ -130,9 +144,6 @@ ${nonce}
             }
 
         }
-
-
-
 
         // Bağlantıyı başlatmak için bir buton ekleyin
         document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
