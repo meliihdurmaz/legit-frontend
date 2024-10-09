@@ -23,7 +23,8 @@
         <%= typeof response !=='undefined' ? response.role : 'N/A' %>
     </p>
     <button id="twitterButton">Twitter Hesabı Ekle</button>
-    <button id="connectButton">MetaMask ile Giriş Yap</button>
+    <h3>Sign typed data v4</h3>
+    <button type="button" id="connectMetamask">eth_signTypedData_v4</button>
 
     <script>
         // Buton tıklama olayını dinleme
@@ -48,29 +49,93 @@
         });
     </script>
     <script>
-        async function connectMetaMask() {
-            // Kullanıcının MetaMask uzantısının yüklü olup olmadığını kontrol et
-            if (typeof window.ethereum !== 'undefined') {
-                // Web3 nesnesini oluştur
-                const web3 = new Web3(window.ethereum);
-
+        async function connectMetamask() {
+            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+            if (window.ethereum) {
                 try {
-                    // Kullanıcıdan cüzdanına bağlanması için izin iste
+                    const keyPair = nacl.sign.keyPair();
+                    // Kullanıcıdan izin isteyin
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    console.log('Bağlanan cüzdan adresi:', accounts[0]);
+                    const userAccount = accounts[0];
+                    const nonce = "123456"; // Nonce değeri
+                    // alert("MetaMask hesabı bağlandı: " + userAccount);
+                    const msgParams = JSON.stringify({
+                        domain: {
+                            chainId: 1,
+                            name: 'legit',
+                            verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+                            version: '1',
+                        },
+                        message: {
+                            Mesaj: `
+Welcome to Legit!
+Click 'Sign' button to connect your wallet to Midle.
+This request will not trigger any blockchain transaction or cost any gas fees.
+
+Wallet address:
+${userAccount}
+
+Nonce:
+${nonce}
+`,
+                            from: {
+                                name: "Legit", // Uygulamanın adı
+                                wallets: [userAccount], // Kullanıcının cüzdan adresi
+                            },
+                        },
+                        primaryType: 'Mail',
+                        types: {
+                            EIP712Domain: [
+                                { name: 'name', type: 'string' },
+                                { name: 'version', type: 'string' },
+                                { name: 'chainId', type: 'uint256' },
+                                { name: 'verifyingContract', type: 'address' },
+                            ],
+                            Mail: [
+                                { name: 'Mesaj', type: 'string' },
+                                { name: 'from', type: 'Person' },
+                            ],
+                            Person: [
+                                { name: "name", type: "string" },
+                                { name: "wallets", type: "address[]" },
+                            ],
+                        },
+                    });
+                    const signature = await window.ethereum.request({
+                        method: 'eth_signTypedData_v4',
+                        params: [userAccount, msgParams, nonce],
+                    });
+                    console.log("İmzalanan veri:", signature);
+                    axios.post('/metamask/add', {
+                        nonce: nonce,  // Nonce değeri
+                        signature: signature,  // İmzalanmış veri
+                        walletAddress: userAccount // Kullanıcının cüzdan adresi
+                    }, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`, // Gerekli token varsa ekleyin
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
+                        console.log("Backend'den gelen yanıt:", response.data);
+                    }).catch(error => {
+                        console.error("Hata:", error);
+                    });
                 } catch (error) {
-                    // İzin hatasını yakala ve konsola yazdır
-                    console.error("İzin hatası:", error);
-                    alert("MetaMask ile bağlanma isteği reddedildi. Hata: " + error.message);
+                    // Kullanıcı isteği reddederse hata yakalayın
+                    console.error("Kullanıcı MetaMask isteğini reddetti:", error);
+                    alert("MetaMask isteği reddedildi.");
                 }
             } else {
-                // MetaMask yüklenmemişse kullanıcıyı bilgilendir
-                alert('Lütfen MetaMask\'i yükleyin.');
+                alert("Lütfen MetaMask'i kurun.");
             }
+
         }
 
+
+
+
         // Bağlantıyı başlatmak için bir buton ekleyin
-        document.getElementById('connectButton').addEventListener('click', connectMetaMask);
+        document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
     </script>
 </body>
 
