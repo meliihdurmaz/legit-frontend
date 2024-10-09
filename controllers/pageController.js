@@ -25,6 +25,11 @@ exports.getHomePage = function (req, res) {
             });
         })
         .catch((error) => {
+            res.render('homePage', {
+                title: 'HomePage',
+                // token: token,
+                response: response.data
+            });
             console.error('GET İsteği Hatası:', error);
         });
 
