@@ -8,7 +8,6 @@
 </head>
 
 <body>
-    <h1>merhaba</h1>
     <script>
         // URL'den hash kısmını al
         const hash = window.location.hash;
@@ -39,12 +38,7 @@
                         const token = data;
                         console.log('Alınan token:', token);
 
-                        // Token'ı localStorage'a kaydedin
-                        localStorage.setItem('bearerToken', token);
-
-                        // Token'ı kullanarak başka bir işlem yapabilirsiniz
-                        // Örneğin, başka bir sayfaya yönlendirme
-                        window.location.href = '/home';
+                        window.location.href = 'http://127.0.0.1:3000/?token=' + encodeURIComponent(token.replace(/"/g, ''));
                     })
                     .catch(error => {
                         console.error('Bir hata oluştu:', error);

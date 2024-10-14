@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { response } = require('express');
 const nacl = require('tweetnacl');
 const naclUtil = require('tweetnacl-util');
 
@@ -96,3 +97,65 @@ exports.nonceMetaMaskAccount = async function (req, res) {
         signedMessage: nonce,
     });
 };
+
+exports.loginMetaMaskAccount = async function (req, res) {
+    const nonce = req.body.nonce;
+    const walletAddress = req.body.walletAddress;
+    const publicKey = req.body.publicKey;
+
+    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/metamask/login';
+    try {
+        const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log('POST İsteği Başarılı:', response.data);
+        res.json(response.data);  // Başarılı durumda istemciye veriyi gönder
+    } catch (error) {
+        console.error('POST İsteği Hatası:', error);
+        res.status(500).json({ message: 'Bir hata oluştu.' });  // Hata durumunda istemciye hata mesajı gönder
+    }
+};
+
+exports.profile = async function (req, res) {
+    const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
+    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/user/me';
+    try {
+        const response = await axios.get(hedefURL, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log('GET İsteği Başarılı:', response.data);
+        res.render('profile', {
+            title: 'Profile',
+            response: response.data
+        });
+        // res.json(response.data);  // Başarılı durumda istemciye veriyi gönder
+    } catch (error) {
+        console.error('GET İsteği Hatası:', error);
+        res.status(500).json({ message: 'Bir hata oluştu.' });  // Hata durumunda istemciye hata mesajı gönder
+    }
+};
+
+exports.twitterLogin = function (req, res) {
+    console.log('Twitter Login');
+    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/twitter/login';
+    axios.get(hedefURL, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            console.log('GET İsteği Bılı:', response);
+            const redirectUrl = response.data.url;
+            res.json({ redirectUrl });
+        })
+        .catch((error) => {
+            console.error('GET İsteği Hatası:', error);
+        });
+
+    // console.log('Token:', token);
+}

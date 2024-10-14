@@ -7,8 +7,10 @@ const PageController = require("../controllers/pageController");
 
 /* methods */
 router.get("/", PageController.getHomePage);
+router.get('/twitter/login', PageController.twitterLogin);
 router.get("/telegram", homePageController.telegramLogin);
 router.get("/telegramCallback", homePageController.telegramCallback);
+
 
 
 

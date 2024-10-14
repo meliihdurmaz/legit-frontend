@@ -4,57 +4,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= title %>
-    </title>
-    <!-- Axios'u ekliyoruz -->
+    <title><%= title %></title>
+    <!-- Axios ve Web3 kütüphanelerini ekliyoruz -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
 
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .alert {
+            color: #d9534f; /* Kırmızı ton */
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .message {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Welcome to the Home Page</h1>
-    <h2>User Information</h2>
-    <p><strong>Email:</strong>
-        <%= typeof response !=='undefined' ? response.email : 'N/A' %>
-    </p>
-    <p><strong>Role:</strong>
-        <%= typeof response !=='undefined' ? response.role : 'N/A' %>
-    </p>
-    <button id="twitterButton">Twitter Hesabı Ekle</button>
-    <h3>Connect Metamask</h3>
-    <button type="button" id="connectMetamask">Connect Metamask</button>
+    <div class="container">
+        <h1>Hoş Geldiniz</h1>
+        <h2>Kullanıcı Bilgileri</h2>
+        <p><strong>Email:</strong> <%= typeof response !== 'undefined' ? response.email : 'N/A' %></p>
+        <p><strong>Rol:</strong> <%= typeof response !== 'undefined' ? response.role : 'N/A' %></p>
+        
+        <button id="twitterButton">Twitter Hesabı Ekle</button>
+        
+        <h3>MetaMask Bağlantısı</h3>
+        <button type="button" id="connectMetamask">MetaMask'i Bağla</button>
+
+        <div class="message">
+            <p>MetaMask ile cüzdanınızı bağlayın ve Twitter hesabınızı ekleyin!</p>
+        </div>
+
+        <div class="alert" id="error-message" style="display: none;"></div>
+    </div>
 
     <script>
-        // Buton tıklama olayını dinleme
+        // Twitter butonuna tıklama olayı
         document.getElementById('twitterButton').addEventListener('click', function () {
-            const token = "<%= typeof token !== 'undefined' ? token : '' %>";  // Backend'den gelen token'ı kullan
+            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
             if (token) {
                 axios.post('/twitter/add', {}, {
                     headers: {
-                        'Authorization': `Bearer ${token}`  // Token'ı başlık olarak ekle
+                        'Authorization': `Bearer ${token}`
                     }
                 }).then(response => {
-                    console.log(response);
-                    const redirectUrl = response.data.redirectUrl; // Yönlendirme URL'sini al
-                    // console.log(redirectUrl);
-                    window.location.href = redirectUrl;  // Yönlendirme yap
+                    const redirectUrl = response.data.redirectUrl;
+                    window.location.href = redirectUrl;
                 }).catch(error => {
                     console.error(error);
+                    showError("Bir hata oluştu. Lütfen tekrar deneyin.");
                 });
             } else {
-                console.error('Token is not defined');
+                showError("Token tanımlı değil.");
             }
         });
-    </script>
-    <script>
+
         async function connectMetamask() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
 
             if (window.ethereum) {
                 try {
-                    // Kullanıcıdan izin isteyin
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                     const userAccount = accounts[0];
                     const response = await axios.post('/metamask/nonce', { userAccount }, {
@@ -65,7 +126,6 @@
                     const nonce = response.data.signedMessage;
                     const publicKey = response.data.publicKey;
 
-                    
                     const msgParams = JSON.stringify({
                         domain: {
                             chainId: 1,
@@ -75,19 +135,19 @@
                         },
                         message: {
                             Mesaj: `
-Welcome to Legit!
-Click 'Sign' button to connect your wallet to Midle.
-This request will not trigger any blockchain transaction or cost any gas fees.
+Hoş Geldiniz!
+Cüzdanınızı Midle ile bağlamak için 'İmzala' butonuna tıklayın.
+Bu istek herhangi bir blockchain işlemini tetiklemez veya gaz ücreti talep etmez.
 
-Wallet address:
+Cüzdan adresi:
 ${userAccount}
 
 Nonce:
 ${nonce}
 `,
                             from: {
-                                name: "Legit", // Uygulamanın adı
-                                wallets: [userAccount], // Kullanıcının cüzdan adresi
+                                name: "Legit",
+                                wallets: [userAccount],
                             },
                         },
                         primaryType: 'Mail',
@@ -110,17 +170,16 @@ ${nonce}
                     });
                     const signature = await window.ethereum.request({
                         method: 'eth_signTypedData_v4',
-                        params: [userAccount, msgParams, nonce],
+                        params: [userAccount, msgParams],
                     });
-                    // console.log("İmzalanan veri:", signature);
-                
+
                     axios.post('/metamask/add', {
-                        nonce: nonce,  // Nonce değeri
-                        walletAddress: userAccount, // Kullanıcının cüzdan adresi
+                        nonce: nonce,
+                        walletAddress: userAccount,
                         publicKey: publicKey
                     }, {
                         headers: {
-                            'Authorization': `Bearer ${token}`, // Gerekli token varsa ekleyin
+                            'Authorization': `Bearer ${token}`,
                             'Content-Type': 'application/json'
                         }
                     }).then(response => {
@@ -129,18 +188,23 @@ ${nonce}
                         console.error("Hata:", error);
                     });
                 } catch (error) {
-                    // Kullanıcı isteği reddederse hata yakalayın
                     console.error("Kullanıcı MetaMask isteğini reddetti:", error);
-                    alert("MetaMask isteği reddedildi.");
+                    showError("MetaMask isteği reddedildi.");
                 }
             } else {
                 alert("Lütfen MetaMask'i kurun.");
             }
-
         }
 
-        // Bağlantıyı başlatmak için bir buton ekleyin
+        // MetaMask bağlantısını başlatmak için buton
         document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
+
+        // Hata mesajlarını gösterme fonksiyonu
+        function showError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
     </script>
 </body>
 
