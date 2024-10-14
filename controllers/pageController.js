@@ -58,12 +58,13 @@ exports.addMetaMaskAccount = async function (req, res) {
     const nonce = req.body.nonce;
     const walletAddress = req.body.walletAddress;
     const publicKey = req.body.publicKey;
-
+    const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
 
     const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/metamask/add';
     try {
-        const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {  // req.body'yi doğrudan gönderiyoruz
+        const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -83,7 +84,6 @@ exports.nonceMetaMaskAccount = async function (req, res) {
     const walletAddress = req.body.userAccount;
 
     const message = naclUtil.decodeUTF8(walletAddress); // Convert message to bytes
-    console.log("message",message)
 
     const signedMessage = nacl.sign(message, signingKey.secretKey);
     const nonce = naclUtil.encodeBase64(signedMessage);

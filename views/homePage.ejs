@@ -1,11 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Legit Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #007bff;
+            /* Bootstrap primary color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            /* Darker shade on hover */
+        }
+
+        .button:focus {
+            outline: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-    <p>Legit Home Page</p>
+    <h1>Legit Home Page</h1>
+    <button class="button" onclick="loginWithTelegram()">Telegram ile Giriş</button>
+    <button class="button" onclick="loginWithTwitter()">Twitter ile Giriş</button>
+    <button class="button" onclick="loginWithMetaMask()">MetaMask ile Giriş</button>
+
+    <script>
+        function loginWithTelegram() {
+            axios.get('/login/telegram', {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                console.log(response);
+                const redirectUrl = response.data.redirectUrl; // Yönlendirme URL'sini al
+                // console.log(redirectUrl);
+                window.location.href = redirectUrl;  // Yönlendirme yap
+            }).catch(error => {
+                console.error(error);
+            });
+            // Telegram login logic here
+            // alert("Telegram ile giriş yapılıyor...");
+        }
+
+        function loginWithTwitter() {
+            // Twitter login logic here
+            alert("Twitter ile giriş yapılıyor...");
+        }
+
+        function loginWithMetaMask() {
+            // MetaMask login logic here
+            alert("MetaMask ile giriş yapılıyor...");
+        }
+    </script>
 </body>
+
 </html>

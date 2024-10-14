@@ -12,6 +12,7 @@ const app = express();
 
 
 const PageRouter = require("./router/pageRouter.js");
+const homePageRouter = require("./router/homePageRouter.js");
 
 app.set("view engine", "ejs");
 
@@ -34,6 +35,9 @@ app.use(cors());
 
 
 app.use("/", PageRouter);
+app.use("/login", homePageRouter);
+app.use("/home", homePageRouter);
+
 
 app.listen(PORT, () => {
     console.log(`Sunucu http://127.0.0.1:${PORT} adresinde çalışıyor`);

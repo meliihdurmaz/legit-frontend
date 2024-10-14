@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 /* controllers */
+const homePageController = require("../controllers/homePageController");
 const PageController = require("../controllers/pageController");
 
 /* methods */
 router.get("/", PageController.getHomePage);
-router.post('/twitter/add', PageController.addTwitterAccount);
-router.post("/metamask/add", PageController.addMetaMaskAccount);
-router.post("/metamask/nonce", PageController.nonceMetaMaskAccount);
+router.get("/telegram", homePageController.telegramLogin);
+router.get("/telegramCallback", homePageController.telegramCallback);
 
 
 

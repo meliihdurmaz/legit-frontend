@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Callback</title>
+</head>
+
+<body>
+    <h1>merhaba</h1>
+    <script>
+        // URL'den hash kısmını al
+        const hash = window.location.hash;
+
+        if (hash) {
+            // #tgAuthResult= değerini almak için düzenli ifade kullan
+            const params = new URLSearchParams(hash.replace('#', '?'));
+
+            // tgAuthResult değerini al
+            const tgAuthResult = params.get('tgAuthResult');
+
+            console.log('Telegram kimlik doğrulama sonucu:', tgAuthResult);
+
+            if (tgAuthResult) {
+                // Sunucuya POST isteği gönder
+                fetch(`https://ae87-78-177-177-231.ngrok-free.app/telegram/connect`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tgAuthResult })
+                })
+                    .then(response => response.text())
+                    .then(data => {
+
+                        console.log('Sunucudan gelen yanıt:', data);
+                        // Sunucudan gelen token'ı işleyin
+                        const token = data;
+                        console.log('Alınan token:', token);
+
+                        // Token'ı localStorage'a kaydedin
+                        localStorage.setItem('bearerToken', token);
+
+                        // Token'ı kullanarak başka bir işlem yapabilirsiniz
+                        // Örneğin, başka bir sayfaya yönlendirme
+                        window.location.href = '/home';
+                    })
+                    .catch(error => {
+                        console.error('Bir hata oluştu:', error);
+                    });
+            }
+        }
+    </script>
+</body>
+
+</html>
