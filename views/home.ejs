@@ -62,11 +62,9 @@
                             'Authorization': `Bearer ${token}`
                         }
                     });
-                    // console.log(response.data.signedMessage)
                     const nonce = response.data.signedMessage;
                     const publicKey = response.data.publicKey;
 
-                    // console.log("Kullanıcı hesabı:", nonce);
                     
                     const msgParams = JSON.stringify({
                         domain: {
@@ -114,14 +112,10 @@ ${nonce}
                         method: 'eth_signTypedData_v4',
                         params: [userAccount, msgParams, nonce],
                     });
-                    console.log("İmzalanan veri:", signature);
-
-
-
-                    
+                    // console.log("İmzalanan veri:", signature);
+                
                     axios.post('/metamask/add', {
                         nonce: nonce,  // Nonce değeri
-                        signature: signature,  // İmzalanmış veri
                         walletAddress: userAccount, // Kullanıcının cüzdan adresi
                         publicKey: publicKey
                     }, {
@@ -130,7 +124,7 @@ ${nonce}
                             'Content-Type': 'application/json'
                         }
                     }).then(response => {
-                        console.log("Backend'den gelen yanıt:", response.data);
+                        console.log("Backend'den gelen yanıt:", response);
                     }).catch(error => {
                         console.error("Hata:", error);
                     });

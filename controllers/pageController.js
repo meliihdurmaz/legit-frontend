@@ -1,14 +1,13 @@
 const axios = require('axios');
-const jwt = require('jsonwebtoken');
 const nacl = require('tweetnacl');
-const { TextEncoder } = require('util');
+const naclUtil = require('tweetnacl-util');
 
 
 
 exports.getHomePage = function (req, res) {
     const token = req.query.token;
     req.session.token = token;
-    const hedefURL = 'https://3638-78-177-177-231.ngrok-free.app/user/me';
+    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/user/me';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -38,7 +37,7 @@ exports.getHomePage = function (req, res) {
 }
 exports.addTwitterAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://3638-78-177-177-231.ngrok-free.app/twitter/authorizeUrl';
+    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/twitter/authorizeUrl';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -56,50 +55,44 @@ exports.addTwitterAccount = function (req, res) {
         });
 };
 exports.addMetaMaskAccount = async function (req, res) {
-    const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const signature = req.body.signature;
     const nonce = req.body.nonce;
     const walletAddress = req.body.walletAddress;
     const publicKey = req.body.publicKey;
 
 
-    const hedefURL = 'https://3638-78-177-177-231.ngrok-free.app/metamask/add';
+    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/metamask/add';
     try {
-        const response = await axios.post(hedefURL, { signature, nonce, walletAddress, publicKey }, {  // req.body'yi doğrudan gönderiyoruz
+        const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {  // req.body'yi doğrudan gönderiyoruz
             headers: {
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
         console.log('POST İsteği Başarılı:', response.data);
+        res.json(response.data);  // Başarılı durumda istemciye veriyi gönder
     } catch (error) {
         console.error('POST İsteği Hatası:', error);
         res.status(500).json({ message: 'Bir hata oluştu.' });  // Hata durumunda istemciye hata mesajı gönder
     }
 };
 
-function signNonce(nonce, secretKey) {
-    const keypair = nacl.sign.keyPair.fromSecretKey(Buffer.from(secretKey));
-    const nonceBuffer = new TextEncoder().encode(nonce);
-    const signature = nacl.sign.detached(nonceBuffer, keypair.secretKey);
-    return {
-        signature: Buffer.from(signature).toString('hex'),
-        publicKey: Buffer.from(keypair.publicKey).toString('hex')
-    };
-}
-
 exports.nonceMetaMaskAccount = async function (req, res) {
-    const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    console.log(req.body);
-    const walletAddress = req.body.walletAddress; // Doğru anahtar
-    const nonce = req.body.nonce; // Gelen nonce değerini al
+    const signingKey = nacl.sign.keyPair();
+    const verifyKey = signingKey.publicKey;
+    const verifyKeyBytes = naclUtil.encodeBase64(verifyKey);
 
-    const keypair = nacl.sign.keyPair();
-    const { signature, publicKey } = signNonce(nonce, keypair.secretKey); // Burada nonce'u imzalıyoruz
+    const walletAddress = req.body.userAccount;
+
+    const message = naclUtil.decodeUTF8(walletAddress); // Convert message to bytes
+    console.log("message",message)
+
+    const signedMessage = nacl.sign(message, signingKey.secretKey);
+    const nonce = naclUtil.encodeBase64(signedMessage);
+
+    console.log("Signed Message:", naclUtil.encodeBase64(signedMessage));
+    console.log("Verify Key (Base64):", verifyKeyBytes);
 
     return res.json({
-        publicKey: publicKey, // Public key'i döndür
-        signedMessage: signature, // İmzalı mesajı döndür
-        walletAddress: walletAddress // Cüzdan adresini döndür
+        publicKey: verifyKeyBytes,
+        signedMessage: nonce,
     });
 };
