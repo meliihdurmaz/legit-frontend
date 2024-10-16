@@ -8,7 +8,7 @@ const naclUtil = require('tweetnacl-util');
 exports.getHomePage = function (req, res) {
     const token = req.query.token;
     req.session.token = token;
-    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/user/me';
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/me';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -38,7 +38,7 @@ exports.getHomePage = function (req, res) {
 }
 exports.addTwitterAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/twitter/authorizeUrl';
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/twitter/twitterAdd';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -61,7 +61,7 @@ exports.addMetaMaskAccount = async function (req, res) {
     const publicKey = req.body.publicKey;
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
 
-    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/metamask/add';
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/metamask/add';
     try {
         const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
             headers: {
@@ -103,7 +103,7 @@ exports.loginMetaMaskAccount = async function (req, res) {
     const walletAddress = req.body.walletAddress;
     const publicKey = req.body.publicKey;
 
-    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/metamask/login';
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/metamask/login';
     try {
         const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
             headers: {
@@ -120,7 +120,7 @@ exports.loginMetaMaskAccount = async function (req, res) {
 
 exports.profile = async function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/user/me';
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/me';
     try {
         const response = await axios.get(hedefURL, {
             headers: {
@@ -141,16 +141,17 @@ exports.profile = async function (req, res) {
 };
 
 exports.twitterLogin = function (req, res) {
-    console.log('Twitter Login');
-    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/twitter/login';
+    // console.log('Twitter Login');
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/twitter/login';
     axios.get(hedefURL, {
         headers: {
             'Content-Type': 'application/json'
         }
     })
         .then((response) => {
-            console.log('GET İsteği Bılı:', response);
-            const redirectUrl = response.data.url;
+            console.log('GET İsteği Bılı:', response.data);
+            const redirectUrl = response.data[0];
+            console.log('Redirect URL:', redirectUrl);
             res.json({ redirectUrl });
         })
         .catch((error) => {

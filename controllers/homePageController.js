@@ -4,7 +4,7 @@ const axios = require('axios');
 exports.telegramLogin = function (req, res) {
     const token = req.query.token;
     req.session.token = token;
-    const hedefURL = 'https://ae87-78-177-177-231.ngrok-free.app/telegram/login';
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/telegram/login';
     axios.get(hedefURL, {
         headers: {
             'Content-Type': 'application/json'
