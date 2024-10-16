@@ -44,15 +44,16 @@
             }
             else if (tgAuthResult) {
                 // Sunucuya POST isteği gönder
-                fetch(`https://6d51-78-177-177-231.ngrok-free.app/telegram/connect`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ tgAuthResult })
-                })
-                    .then(response => response.text())
-                    .then(data => {
+                (async () => {
+                    try {
+                        const response = await fetch(`https://6d51-78-177-177-231.ngrok-free.app/telegram/connect`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ tgAuthResult })
+                        });
+                        const data = await response.text();
 
                         console.log('Sunucudan gelen yanıt:', data);
                         // Sunucudan gelen token'ı işleyin
@@ -60,10 +61,10 @@
                         console.log('Alınan token:', token);
 
                         window.location.href = 'https://telagramapplegit-a55c4719cc06.herokuapp.com/?token=' + encodeURIComponent(token.replace(/"/g, ''));
-                    })
-                    .catch(error => {
+                    } catch (error) {
                         console.error('Bir hata oluştu:', error);
-                    });
+                    }
+                })();
             }
         }
     </script>
