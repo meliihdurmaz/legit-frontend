@@ -90,51 +90,103 @@
         <h3>MetaMask Bağlantısı</h3>
         <button type="button" id="connectMetamask">MetaMask'i Bağla</button>
 
+        <h3>Telegram Hesabı Ekle</h3>
+        <label for="telegramUsername">Kullanıcı Adı:</label>
+        <input type="text" id="telegramUsername" placeholder="Telegram kullanıcı adınızı girin">
+        <br>
+        <button type="button" id="connectTelegram">Telegram'ı Bağla</button>
+
         <div class="message">
             <p>MetaMask ile cüzdanınızı bağlayın ve Twitter hesabınızı ekleyin!</p>
         </div>
 
         <button type="button" id="viewAccountsButton">Hesaplarımı Gör</button>
+
+        <button type="button" id="viewInvitationsButton">Gelen Davetleri Gör</button>
+
+        <div id="invitationsContainer" style="display: none;">
+            <h3>Gelen Davetler</h3>
+            <ul id="invitationsList"></ul>
+        </div>
+
         <div class="alert" id="error-message" style="display: none;"></div>
     </div>
     <script>
-        document.getElementById('viewAccountsButton').addEventListener('click', function () {
-            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
-            // Buraya hesapları gösteren işlevi ekleyin
-            axios.post('/home/getAccounts', {}, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => {
-                    alert("Hesaplar: " + JSON.stringify(response.data));
-                }).catch(error => {
-                    console.error(error);
-                    showError("Bir hata oluştu. Lütfen tekrar deneyin.");
-                });
-            // Burada kullanıcı hesaplarını görüntüleyebilirsiniz
-        });
-    </script>
-    <script>
         // Twitter butonuna tıklama olayı
-        document.getElementById('twitterButton').addEventListener('click', function () {
+        function viewInvitationsButton() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
-            if (token) {
-                axios.post('/twitter/add', {}, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then(response => {
-                    const redirectUrl = response.data.redirectUrl;
-                    window.location.href = redirectUrl;
-                }).catch(error => {
-                    console.error(error);
-                    showError("Bir hata oluştu. Lütfen tekrar deneyin.");
-                });
-            } else {
-                showError("Token tanımlı değil.");
-            }
-        });
+            axios.get('/home/getTelegramInvites', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    const responseData = response.data;
+                    console.log('Sunucudan gelen yanıt:', response.data);
+                    const invitationsContainer = document.getElementById('invitationsContainer');
+                    const invitationsList = document.getElementById('invitationsList');
 
+                    // Davetleri temizle
+                    invitationsList.innerHTML = '';
+
+                    // Kullanıcıdan gelen davetleri listele
+                    responseData.forEach(user => {
+                        const username = user[0]; // Kullanıcı adı
+
+                        // Kullanıcı adı için bir div oluştur
+                        const userDiv = document.createElement('div');
+
+                        // Kullanıcı adını ekle
+                        const usernameText = document.createElement('p');
+                        usernameText.innerText = `Kullanıcı: ${username}`;
+                        userDiv.appendChild(usernameText);
+
+                        // Kabul et ve reddet butonları
+                        const acceptButton = document.createElement('button');
+                        acceptButton.innerText = 'Kabul Et';
+                        acceptButton.onclick = () => {
+                            axios.post('/home/acceptInvite', { username }, {
+                                headers: {
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            })
+                            .then(response => {
+                                console.log('Davet kabul edildi:', response.data);
+                            })
+                            .catch(error => {
+                                console.error('Bir hata oluştu:', error);
+                            });
+                            console.log(`Davet kabul edildi: ${username}`);
+                        };
+
+                        const rejectButton = document.createElement('button');
+                        rejectButton.innerText = 'Reddet';
+                        rejectButton.onclick = () => {
+                            // Daveti reddetme işlemi
+                            console.log(`Davet reddedildi: ${username}`);
+                        };
+
+                        // Butonları ekle
+                        userDiv.appendChild(acceptButton);
+                        userDiv.appendChild(rejectButton);
+
+                        // Kullanıcı div'ini davetler listesine ekle
+                        invitationsList.appendChild(userDiv);
+                    });
+
+                    // Davetler alanını göster
+                    invitationsContainer.style.display = 'block';
+
+                })
+                .catch(error => {
+                    console.error('Bir hata oluştu:', error);
+                });
+        }
+        function showError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
         async function connectMetamask() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
 
@@ -220,15 +272,68 @@ ${nonce}
             }
         }
 
+        async function connectTelegram() {
+            const username = document.getElementById('telegramUsername').value;
+
+            // Eğer username boş değilse, işlemi gerçekleştirebiliriz
+            if (username) {
+                const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+                console.log(token)
+                axios.post('/home/addTelegramAccount', { username }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then(response => {
+                        console.log('Sunucudan gelen yanıt:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Bir hata oluştu:', error);
+                    });
+                // Burada username'i backend'e gönderebilir veya başka işlemler yapabilirsiniz
+            } else {
+                alert('Lütfen bir Telegram kullanıcı adı giriniz.');
+            }
+        }
         // MetaMask bağlantısını başlatmak için buton
         document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
-
+        document.getElementById('connectTelegram').addEventListener('click', connectTelegram);
+        document.getElementById('viewInvitationsButton').addEventListener('click', viewInvitationsButton);
+        document.getElementById('viewAccountsButton').addEventListener('click', function () {
+            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+            // Buraya hesapları gösteren işlevi ekleyin
+            axios.post('/home/getAccounts', {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                alert("Hesaplar: " + JSON.stringify(response.data));
+            }).catch(error => {
+                console.error(error);
+                showError("Bir hata oluştu. Lütfen tekrar deneyin.");
+            });
+            // Burada kullanıcı hesaplarını görüntüleyebilirsiniz
+        });
+        document.getElementById('twitterButton').addEventListener('click', function () {
+            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+            if (token) {
+                axios.post('/twitter/add', {}, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    const redirectUrl = response.data.redirectUrl;
+                    window.location.href = redirectUrl;
+                }).catch(error => {
+                    console.error(error);
+                    showError("Bir hata oluştu. Lütfen tekrar deneyin.");
+                });
+            } else {
+                showError("Token tanımlı değil.");
+            }
+        });
         // Hata mesajlarını gösterme fonksiyonu
-        function showError(message) {
-            const errorMessage = document.getElementById('error-message');
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-        }
+
     </script>
 </body>
 
