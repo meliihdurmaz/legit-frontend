@@ -55,6 +55,7 @@
 
     <script>
         function loginWithTelegram() {
+            console.log("Telegram ile giriş yapılıyor...");
             axios.get('/login/telegram', {}, {
                 headers: {
                     'Content-Type': 'application/json'
