@@ -20,29 +20,29 @@
             // tgAuthResult değerini al
             const tgAuthResult = params.get('tgAuthResult');
 
-            // if(userId && tgAuthResult) {
-            //     fetch(`https://6d51-78-177-177-231.ngrok-free.app/telegram/telegramAddConnect`, {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         },
-            //         body: JSON.stringify({ tgAuthResult, userId })
-            //     })
-            //         .then(response => response.text())
-            //         .then(data => {
+            if(userId && tgAuthResult) {
+                fetch(`https://6d51-78-177-177-231.ngrok-free.app/telegram/telegramAddConnect`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tgAuthResult, userId })
+                })
+                    .then(response => response.text())
+                    .then(data => {
 
-            //             console.log('Sunucudan gelen yanıt:', data);
-            //             // Sunucudan gelen token'ı işleyin
-            //             const token = data;
-            //             console.log('Alınan token:', token);
+                        console.log('Sunucudan gelen yanıt:', data);
+                        // Sunucudan gelen token'ı işleyin
+                        const token = data;
+                        console.log('Alınan token:', token);
 
-            //             window.location.href = 'http://127.0.0.1:3000/?token=' + encodeURIComponent(token.replace(/"/g, ''));
-            //         })
-            //         .catch(error => {
-            //             console.error('Bir hata oluştu:', error);
-            //         });
-            // }
-            if (tgAuthResult) {
+                        window.location.href = 'https://telagramapplegit-a55c4719cc06.herokuapp.com//?token=' + encodeURIComponent(token.replace(/"/g, ''));
+                    })
+                    .catch(error => {
+                        console.error('Bir hata oluştu:', error);
+                    });
+            }
+            else if (tgAuthResult) {
                 // Sunucuya POST isteği gönder
                 fetch(`https://6d51-78-177-177-231.ngrok-free.app/telegram/connect`, {
                     method: 'POST',
@@ -59,7 +59,7 @@
                         const token = data;
                         console.log('Alınan token:', token);
 
-                        window.location.href = 'http://127.0.0.1:3000/?token=' + encodeURIComponent(token.replace(/"/g, ''));
+                        window.location.href = 'https://telagramapplegit-a55c4719cc06.herokuapp.com//?token=' + encodeURIComponent(token.replace(/"/g, ''));
                     })
                     .catch(error => {
                         console.error('Bir hata oluştu:', error);

@@ -90,11 +90,14 @@
         <h3>MetaMask Bağlantısı</h3>
         <button type="button" id="connectMetamask">MetaMask'i Bağla</button>
 
+        <h3>Telegram Bağlantısı</h3>
+        <button type="button" id="connetTelegram">telegram'i Bağla</button>
+
         <h3>Telegram Hesabı Ekle</h3>
         <label for="telegramUsername">Kullanıcı Adı:</label>
         <input type="text" id="telegramUsername" placeholder="Telegram kullanıcı adınızı girin">
         <br>
-        <button type="button" id="connectTelegram">Telegram'ı Bağla</button>
+        <button type="button" id="addTelegram">Telegram'ı Ekle</button>
 
         <div class="message">
             <p>MetaMask ile cüzdanınızı bağlayın ve Twitter hesabınızı ekleyin!</p>
@@ -113,6 +116,20 @@
     </div>
     <script>
         // Twitter butonuna tıklama olayı
+        function connectTelegram() {
+            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+            axios.get('/home/connectTelegram', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                const redirectUrl = response.data.response.url; // Yönlendirme URL'sini al
+                console.log(redirectUrl);
+                window.location.href = redirectUrl; // Yönlendirme yap
+            }).catch(error => {
+                console.error(error);
+            });
+        }
         function viewInvitationsButton() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
             axios.get('/home/getTelegramInvites', {
@@ -271,8 +288,7 @@ ${nonce}
                 alert("Lütfen MetaMask'i kurun.");
             }
         }
-
-        async function connectTelegram() {
+        async function addTelegram() {
             const username = document.getElementById('telegramUsername').value;
 
             // Eğer username boş değilse, işlemi gerçekleştirebiliriz
@@ -297,7 +313,8 @@ ${nonce}
         }
         // MetaMask bağlantısını başlatmak için buton
         document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
-        document.getElementById('connectTelegram').addEventListener('click', connectTelegram);
+        document.getElementById('addTelegram').addEventListener('click', addTelegram);
+        document.getElementById('connetTelegram').addEventListener('click', connectTelegram);
         document.getElementById('viewInvitationsButton').addEventListener('click', viewInvitationsButton);
         document.getElementById('viewAccountsButton').addEventListener('click', function () {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
