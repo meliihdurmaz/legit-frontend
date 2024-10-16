@@ -100,7 +100,7 @@
         <button type="button" id="addTelegram">Telegram'ı Ekle</button>
 
         <div class="message">
-            <p>MetaMask ile cüzdanınızı bağlayın ve Twitter hesabınızı ekleyin!</p>
+            <p id="accounts">merhaba</p>
         </div>
 
         <button type="button" id="viewAccountsButton">Hesaplarımı Gör</button>
@@ -324,7 +324,7 @@ ${nonce}
                     'Authorization': `Bearer ${token}`
                 }
             }).then(response => {
-                alert("Hesaplar: " + JSON.stringify(response.data));
+                document.getElementById('accounts').textContent = "Hesaplar: " + JSON.stringify(response.data);
             }).catch(error => {
                 console.error(error);
                 showError("Bir hata oluştu. Lütfen tekrar deneyin.");
