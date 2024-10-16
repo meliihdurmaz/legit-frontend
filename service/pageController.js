@@ -159,4 +159,49 @@ exports.twitterLogin = function (req, res) {
         });
 
     // console.log('Token:', token);
-}
+};
+
+exports.getAccounts = function (req, res) {
+    const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
+    console.log('Token:', token);
+    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/getAccounts';
+    axios.get(hedefURL, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            console.log('GET İsteği Başarılı:', response.data);
+            res.json(response.data);  // Başarılı durumda istemciye veriyi gönder
+        })
+        .catch((error) => {
+            console.error('GET İsteği Hatası:', error);
+            res.status(500).json({ message: 'Bir hata oluştu.' });  // Hata durumunda istemciye hata mesajı gönder
+        });
+    // const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/me';
+    // axios.get(hedefURL, {
+    //     headers: {
+    //         'Authorization': `Bearer ${token}`,
+    //         'Content-Type': 'application/json'
+    //     }
+    // })
+    //     .then((response) => {
+    //         // res.send(response); // Kullanıcı bilgilerini geri gönder
+    //         // console.log('GET İsteği Başarılı:', response.data);
+    //         const sessionToken = req.session.token;
+    //         res.render('home', {
+    //             title: 'Home',
+    //             token: sessionToken,
+    //             response: response.data
+    //         });
+    //     })
+    //     .catch((error) => {
+    //         res.render('homePage', {
+    //             title: 'HomePage',
+    //             // token: token,
+    //             response: error.data
+    //         });
+    //         // console.error('GET İsteği Hatası:', error);
+    //     });
+};

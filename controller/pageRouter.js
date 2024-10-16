@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 /* controllers */
-const PageController = require("../controllers/pageController");
+const PageController = require("../service/pageController");
 
 /* methods */
 router.get("/", PageController.getHomePage);

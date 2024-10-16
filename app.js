@@ -1,22 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const axios = require('axios');
-const path = require("path");
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const PageRouter = require("./controller/pageRouter.js");
+const homePageRouter = require("./controller/homePageRouter.js");
 
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-
-
-const PageRouter = require("./router/pageRouter.js");
-const homePageRouter = require("./router/homePageRouter.js");
-
 app.set("view engine", "ejs");
-
-
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(session({
@@ -25,12 +18,6 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }   // Geliştirme ortamında `secure` false olmalı, production'da true yapabilirsiniz.
 }));
-
-
-
-// app.use(express.static('public'));
-
-
 app.use(cors());
 
 
