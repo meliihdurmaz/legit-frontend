@@ -22,9 +22,8 @@ exports.telegramLogin = function (req, res) {
 };
 
 exports.telegramCallback = function (req, res) {
-    res.render('telegramCallback', {
-        title: 'callback',
-    });
+    const hash = req.query.hash;
+    console.log('Hash:', hash);
 };
 
 exports.connectTelegram = function (req, res) {
