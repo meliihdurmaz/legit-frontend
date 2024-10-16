@@ -2,11 +2,10 @@ const axios = require('axios');
 
 
 exports.telegramLogin = function (req, res) {
-    const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
+    // const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
     const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/telegram/login';
     axios.get(hedefURL, {
         headers: {
-            authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
     })
