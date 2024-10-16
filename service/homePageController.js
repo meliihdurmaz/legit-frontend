@@ -22,24 +22,10 @@ exports.telegramLogin = function (req, res) {
 };
 
 exports.telegramCallback = function (req, res) {
-    const tgAuthResult = req.hash || req.query.tgAuthResult; // tgAuthResult URL'den alınır
-
-    if (tgAuthResult) {
-        try {
-            // JWT ile veriyi parse etme
-            const decoded = jwt.decode(tgAuthResult);
-            console.log('Decoded Data:', decoded);
-
-            // İşlem sonrası uygun yanıt gönderilebilir
-            res.send('Veri alındı');
-        } catch (error) {
-            console.error('Veri işlenirken hata:', error);
-            res.status(400).send('Bad Request');
-        }
-    } else {
-        console.error('tgAuthResult parametresi bulunamadı');
-        res.status(400).send('Bad Request');
-    }
+    console.log(req)
+    res.render('telegramCallback', {
+        title: 'callback',
+    });
 };
 
 exports.connectTelegram = function (req, res) {
