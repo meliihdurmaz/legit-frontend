@@ -78,7 +78,7 @@
     <div class="container">
         <h1>Hoş Geldiniz</h1>
         <h2>Kullanıcı Bilgileri</h2>
-        <p><strong>Email:</strong>
+        <!-- <p><strong>Email:</strong>
             <%= typeof response !=='undefined' ? response.email : 'N/A' %>
         </p>
         <p><strong>Rol:</strong>
@@ -112,12 +112,13 @@
             <ul id="invitationsList"></ul>
         </div>
 
-        <div class="alert" id="error-message" style="display: none;"></div>
+        <div class="alert" id="error-message" style="display: none;"></div> -->
     </div>
     <script>
+        
         // Twitter butonuna tıklama olayı
         function connectTelegram() {
-            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+            const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
             axios.get('/home/connectTelegram', {
                 headers: {
                     'Authorization': `Bearer ${token}`

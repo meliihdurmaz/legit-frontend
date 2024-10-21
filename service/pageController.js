@@ -39,7 +39,18 @@ exports.getHomePage = function (req, res) {
 };
 
 exports.anaSayfa = function (req, res) {
-    console.log(req.body);
+    const token = req.body.token;
+    if (token) {
+        // Token'ı cookie'ye yaz
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
+        // Token'ı localStorage'a yazmak istemiyorsanız, bunu istemci tarafında yapmanız gerekir.
+        console.log('Token:', token);
+        res.render('home', {
+            title: 'Home',
+        });
+    } else {
+        console.log('Token bulunamadı.');
+    }
 };
 
 exports.addTwitterAccount = function (req, res) {
