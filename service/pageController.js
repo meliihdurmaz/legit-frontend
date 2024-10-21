@@ -7,7 +7,7 @@ const naclUtil = require('tweetnacl-util');
 exports.getHomePage = function (req, res) {
     const token = req.query.token;
     req.session.token = token;
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/me';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -37,7 +37,7 @@ exports.getHomePage = function (req, res) {
 }
 exports.addTwitterAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/twitter/twitterAdd';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/twitter/twitterAdd';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -60,7 +60,7 @@ exports.addMetaMaskAccount = async function (req, res) {
     const publicKey = req.body.publicKey;
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
 
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/metamask/add';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/metamask/add';
     try {
         const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
             headers: {
@@ -102,7 +102,7 @@ exports.loginMetaMaskAccount = async function (req, res) {
     const walletAddress = req.body.walletAddress;
     const publicKey = req.body.publicKey;
 
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/metamask/login';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/metamask/login';
     try {
         const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
             headers: {
@@ -119,7 +119,7 @@ exports.loginMetaMaskAccount = async function (req, res) {
 
 exports.profile = async function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/me';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
     try {
         const response = await axios.get(hedefURL, {
             headers: {
@@ -141,7 +141,7 @@ exports.profile = async function (req, res) {
 
 exports.twitterLogin = function (req, res) {
     // console.log('Twitter Login');
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/twitter/login';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/twitter/login';
     axios.get(hedefURL, {
         headers: {
             'Content-Type': 'application/json'
@@ -163,7 +163,7 @@ exports.twitterLogin = function (req, res) {
 exports.getAccounts = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
     console.log('Token:', token);
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/getAccounts';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/getAccounts';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -178,7 +178,7 @@ exports.getAccounts = function (req, res) {
             console.error('GET İsteği Hatası:', error);
             res.status(500).json({ message: 'Bir hata oluştu.' });  // Hata durumunda istemciye hata mesajı gönder
         });
-    // const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/me';
+    // const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
     // axios.get(hedefURL, {
     //     headers: {
     //         'Authorization': `Bearer ${token}`,
@@ -207,7 +207,7 @@ exports.getAccounts = function (req, res) {
 
 exports.addTelegramAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/telegram/add';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/telegram/add';
     axios.post(hedefURL, req.body, {
         headers: {
             authorization: `Bearer ${token}`,
@@ -218,7 +218,7 @@ exports.addTelegramAccount = function (req, res) {
 
 exports.getTelegramInvites = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
-    axios.get('https://6d51-78-177-177-231.ngrok-free.app/user/getTelegramInvites', {
+    axios.get('https://8f08-78-177-177-231.ngrok-free.app/user/getTelegramInvites', {
         headers: {
             authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -239,7 +239,7 @@ exports.acceptInvite = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
     const username = req.body;
     console.log('Username:', username);
-    const hedefURL = 'https://6d51-78-177-177-231.ngrok-free.app/user/respondTelegramInvite';
+    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/respondTelegramInvite';
     axios.post(hedefURL, {
         username: String(username.username),
         status: "accept"
