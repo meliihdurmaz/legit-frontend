@@ -9,4 +9,4 @@ router.get("/telegram", loginController.telegramLogin);
 router.get("/connectTelegram", loginController.connectTelegram);
 router.get("/telegramCallback", loginController.telegramCallback);
 
-module.exports = router;
+module.exports = router; 
