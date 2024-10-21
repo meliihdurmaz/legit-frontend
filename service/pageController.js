@@ -46,8 +46,8 @@ exports.anaSayfa = function (req, res) {
         res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
         // Token'ı localStorage'a yazmak istemiyorsanız, bunu istemci tarafında yapmanız gerekir.
         console.log('Token:', token);
-        res.render('home', {
-            title: 'Home',
+        res.render('anasayfa', {
+            title: 'anasayfa',
         });
     } else {
         console.log('Token bulunamadı.');
