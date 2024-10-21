@@ -57,14 +57,11 @@
                             body: JSON.stringify({ tgAuthResult })
                         });
                         const data = await response.text();
-
-                        console.log('Sunucudan gelen yanıt:', data);
-                        // Sunucudan gelen token'ı işleyin
-                        const token = data;
-                        console.log('Alınan token:', token);
-                        // localStorage.setItem('token', token);
+                        // Token'ı localStorage'a yaz
+                    
+                        localStorage.setItem('token', data);
                         axios.post('/anasayfa', {
-                            token: token  // Hash verisini gönderiyoruz
+                            token: data
                         })
                         window.location.href = '/home';  
                     } catch (error) {

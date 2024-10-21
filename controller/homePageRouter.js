@@ -11,6 +11,7 @@ router.post("/getAccounts", homePageController.getAccounts);
 router.post("/addTelegramAccount", homePageController.addTelegramAccount);
 router.get("/getTelegramInvites", homePageController.getTelegramInvites);
 router.post("/acceptInvite", homePageController.acceptInvite);
+router.post("/tokenSave", homePageController.tokenSave);
 
 
 

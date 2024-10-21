@@ -61,7 +61,6 @@
                     'Content-Type': 'application/json'
                 }
             }).then(response => {
-                console.log(response);
                 const redirectUrl = response.data.redirectUrl; // Yönlendirme URL'sini al
                 window.location.href = redirectUrl;  // Yönlendirme yap
             }).catch(error => {
