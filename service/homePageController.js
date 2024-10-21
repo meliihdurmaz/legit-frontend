@@ -22,7 +22,7 @@ exports.telegramLogin = function (req, res) {
 };
 
 exports.telegramCallback = function (req, res) {
-    console.log(req)
+    // console.log(req)
     res.render('telegramCallback', {
         title: 'callback',
     });
