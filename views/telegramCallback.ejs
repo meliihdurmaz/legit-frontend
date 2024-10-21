@@ -60,9 +60,6 @@
                         // Token'ı localStorage'a yaz
                     
                         localStorage.setItem('token', data);
-                        axios.post('/anasayfa', {
-                            token: data
-                        })
                         window.location.href = '/home';  
                     } catch (error) {
                         console.error('Bir hata oluştu:', error);
