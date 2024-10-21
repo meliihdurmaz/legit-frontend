@@ -72,7 +72,7 @@
         }
 
         function loginWithTwitter() {
-            axios.get('/home/twitter/login', {})
+            axios.get('/login/twitter', {})
             .then(response => {
                 const redirectUrl = response.data.redirectUrl;
                 window.location.href=redirectUrl;

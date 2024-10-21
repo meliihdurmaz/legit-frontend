@@ -83,7 +83,7 @@
         </p>
         <p><strong>Rol:</strong>
             <%= typeof response !=='undefined' ? response.role : 'N/A' %>
-        </p>
+        </p> -->
 
         <button id="twitterButton">Twitter Hesabı Ekle</button>
 
@@ -112,7 +112,7 @@
             <ul id="invitationsList"></ul>
         </div>
 
-        <div class="alert" id="error-message" style="display: none;"></div> -->
+        <div class="alert" id="error-message" style="display: none;"></div>
     </div>
     <script>
 
@@ -199,11 +199,6 @@
                 .catch(error => {
                     console.error('Bir hata oluştu:', error);
                 });
-        }
-        function showError(message) {
-            const errorMessage = document.getElementById('error-message');
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
         }
         async function connectMetamask() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
@@ -312,12 +307,7 @@ ${nonce}
                 alert('Lütfen bir Telegram kullanıcı adı giriniz.');
             }
         }
-        // MetaMask bağlantısını başlatmak için buton
-        document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
-        document.getElementById('addTelegram').addEventListener('click', addTelegram);
-        document.getElementById('connetTelegram').addEventListener('click', connectTelegram);
-        document.getElementById('viewInvitationsButton').addEventListener('click', viewInvitationsButton);
-        document.getElementById('viewAccountsButton').addEventListener('click', function () {
+        function viewAccountsButton() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
             // Buraya hesapları gösteren işlevi ekleyin
             axios.post('/home/getAccounts', {}, {
@@ -331,8 +321,8 @@ ${nonce}
                 showError("Bir hata oluştu. Lütfen tekrar deneyin.");
             });
             // Burada kullanıcı hesaplarını görüntüleyebilirsiniz
-        });
-        document.getElementById('twitterButton').addEventListener('click', function () {
+        }
+        function twitterButton() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
             if (token) {
                 axios.post('/twitter/add', {}, {
@@ -349,15 +339,22 @@ ${nonce}
             } else {
                 showError("Token tanımlı değil.");
             }
-        });
-        // Hata mesajlarını gösterme fonksiyonu
-        window.onload
-            = function () {
-                console.log("Sayfa yüklendi.");
-                const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
-                console.log("Token:", token);
-                // Buraya sayfa yüklendiğinde çalışacak kodları ekleyebilirsiniz
-            };
+        }
+        function showError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        
+        document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
+        document.getElementById('addTelegram').addEventListener('click', addTelegram);
+        document.getElementById('connetTelegram').addEventListener('click', connectTelegram);
+        document.getElementById('viewInvitationsButton').addEventListener('click', viewInvitationsButton);
+        document.getElementById('viewAccountsButton').addEventListener('click', viewAccountsButton);
+        document.getElementById('twitterButton').addEventListener('click', twitterButton);
+
+
     </script>
 </body>
 

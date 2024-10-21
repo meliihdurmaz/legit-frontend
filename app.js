@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const PageRouter = require("./controller/pageRouter.js");
 const homePageRouter = require("./controller/homePageRouter.js");
-
+const loginRouter = require("./controller/loginRouter.js");
 
 const PORT = process.env.PORT || 3000;
 
@@ -22,7 +22,7 @@ app.use(cors());
  
 
 app.use("/", PageRouter);
-app.use("/login", homePageRouter);
+app.use("/login", loginRouter);
 app.use("/home", homePageRouter);
 
 

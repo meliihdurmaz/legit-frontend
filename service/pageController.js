@@ -158,26 +158,7 @@ exports.profile = async function (req, res) {
     }
 };
 
-exports.twitterLogin = function (req, res) {
-    // console.log('Twitter Login');
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/twitter/login';
-    axios.get(hedefURL, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then((response) => {
-            console.log('GET İsteği Bılı:', response.data);
-            const redirectUrl = response.data[0];
-            console.log('Redirect URL:', redirectUrl);
-            res.json({ redirectUrl });
-        })
-        .catch((error) => {
-            console.error('GET İsteği Hatası:', error);
-        });
 
-    // console.log('Token:', token);
-};
 
 exports.getAccounts = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
