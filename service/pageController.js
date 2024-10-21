@@ -5,8 +5,8 @@ const naclUtil = require('tweetnacl-util');
 
 exports.getHomePage = function (req, res) {
     console.log('Home Page');
-    res.render('anasayfa', {
-        title: 'anasayfa',
+    res.render('homePage', {
+        title: 'HomePage',
     });
 
     // const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';

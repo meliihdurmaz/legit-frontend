@@ -49,3 +49,10 @@ exports.connectTelegram = function (req, res) {
             console.error('GET İsteği Hatası:', error);
         });
 };
+
+
+exports.getHomePage = function (req, res) {
+    res.render('home', {
+        title: 'Home',
+    });
+};
