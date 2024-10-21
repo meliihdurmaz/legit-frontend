@@ -1,5 +1,4 @@
 const axios = require('axios');
-const localStorage = require('localStorage');
 
 
 
@@ -107,12 +106,12 @@ exports.acceptInvite = function (req, res) {
 
 };
 
-exports.tokenSave = function (req, res) {
-    const token = req.body.token;
-    if (token) {
-        localStorage.setItem('token', token);
-        res.status(200).json({ message: 'Token başarıyla kaydedildi.' });
-    } else {
-        res.status(400).json({ message: 'Token eksik.' });
-    }
-};
+// exports.tokenSave = function (req, res) {
+//     const token = req.body.token;
+//     if (token) {
+//         localStorage.setItem('token', token);
+//         res.status(200).json({ message: 'Token başarıyla kaydedildi.' });
+//     } else {
+//         res.status(400).json({ message: 'Token eksik.' });
+//     }
+// };
