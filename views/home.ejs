@@ -122,7 +122,7 @@
         }
         // Twitter butonuna tıklama olayı
         function connectTelegram() {
-            const token = getCookie('token'); // Token'ı çerezden al
+            const token = localStorage.getItem('token');// Token'ı çerezden al
                 axios.get('/login/connectTelegram', {
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -136,7 +136,7 @@
                 });
         }
         function viewInvitationsButton() {
-            const token = getCookie('token'); // Token'ı çerezden al
+            const token = localStorage.getItem('token');// Token'ı çerezden al
             axios.get('/home/getTelegramInvites', {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -205,7 +205,7 @@
                 });
         }
         async function connectMetamask() {
-            const token = getCookie('token'); // Token'ı çerezden al
+            const token = localStorage.getItem('token');// Token'ı çerezden al
 
             if (window.ethereum) {
                 try {
@@ -293,7 +293,7 @@ ${nonce}
 
             // Eğer username boş değilse, işlemi gerçekleştirebiliriz
             if (username) {
-                const token = getCookie('token'); // Token'ı çerezden al
+                const token = localStorage.getItem('token');// Token'ı çerezden al
                 console.log(token)
                 axios.post('/home/addTelegramAccount', { username }, {
                     headers: {
