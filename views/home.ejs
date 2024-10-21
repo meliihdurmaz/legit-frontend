@@ -115,7 +115,7 @@
         <div class="alert" id="error-message" style="display: none;"></div> -->
     </div>
     <script>
-        
+
         // Twitter butonuna tıklama olayı
         function connectTelegram() {
             const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
@@ -168,12 +168,12 @@
                                     'Authorization': `Bearer ${token}`
                                 }
                             })
-                            .then(response => {
-                                console.log('Davet kabul edildi:', response.data);
-                            })
-                            .catch(error => {
-                                console.error('Bir hata oluştu:', error);
-                            });
+                                .then(response => {
+                                    console.log('Davet kabul edildi:', response.data);
+                                })
+                                .catch(error => {
+                                    console.error('Bir hata oluştu:', error);
+                                });
                             console.log(`Davet kabul edildi: ${username}`);
                         };
 
@@ -351,7 +351,13 @@ ${nonce}
             }
         });
         // Hata mesajlarını gösterme fonksiyonu
-
+        window.onload
+            = function () {
+                console.log("Sayfa yüklendi.");
+                const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
+                console.log("Token:", token);
+                // Buraya sayfa yüklendiğinde çalışacak kodları ekleyebilirsiniz
+            };
     </script>
 </body>
 

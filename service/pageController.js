@@ -39,8 +39,9 @@ exports.getHomePage = function (req, res) {
 };
 
 exports.anaSayfa = function (req, res) {
-    const token = req.body.token;
+    let token = req.body.token;
     if (token) {
+        token = decodeURIComponent(token);
         // Token'ı cookie'ye yaz
         res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict' });
         // Token'ı localStorage'a yazmak istemiyorsanız, bunu istemci tarafında yapmanız gerekir.
