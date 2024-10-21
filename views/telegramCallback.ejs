@@ -9,6 +9,8 @@
 
 <body>
     <p></p>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
         // URL'den hash kısmını al
         const hash = window.location.hash;
@@ -61,8 +63,9 @@
                         const token = data;
                         console.log('Alınan token:', token);
                         // localStorage.setItem('token', token);
-                        const test = await axios.post('/', { token }, {
-                        });
+                        axios.post('/anasayfa', {
+                            token: token  // Hash verisini gönderiyoruz
+                        })
                         // window.location.href = 'https://telagramapplegit-a55c4719cc06.herokuapp.com/?token=' + encodeURIComponent(token.replace(/"/g, ''));
                     } catch (error) {
                         console.error('Bir hata oluştu:', error);
