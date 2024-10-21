@@ -136,27 +136,6 @@ exports.loginMetaMaskAccount = async function (req, res) {
     }
 };
 
-exports.profile = async function (req, res) {
-    const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
-    try {
-        const response = await axios.get(hedefURL, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log('GET İsteği Başarılı:', response.data);
-        res.render('profile', {
-            title: 'Profile',
-            response: response.data
-        });
-        // res.json(response.data);  // Başarılı durumda istemciye veriyi gönder
-    } catch (error) {
-        console.error('GET İsteği Hatası:', error);
-        res.status(500).json({ message: 'Bir hata oluştu.' });  // Hata durumunda istemciye hata mesajı gönder
-    }
-};
 
 
 
