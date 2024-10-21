@@ -115,21 +115,25 @@
         <div class="alert" id="error-message" style="display: none;"></div>
     </div>
     <script>
-
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
         // Twitter butonuna tıklama olayı
         function connectTelegram() {
-            const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
-            axios.get('/home/connectTelegram', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }).then(response => {
-                const redirectUrl = response.data.response.url; // Yönlendirme URL'sini al
-                console.log(redirectUrl);
-                window.location.href = redirectUrl; // Yönlendirme yap
-            }).catch(error => {
-                console.error(error);
-            });
+            const token = getCookie('token'); // Token'ı çerezden al
+                axios.get('/home/connectTelegram', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(response => {
+                    const redirectUrl = response.data.response.url; // Yönlendirme URL'sini al
+                    console.log(redirectUrl);
+                    window.location.href = redirectUrl; // Yönlendirme yap
+                }).catch(error => {
+                    console.error(error);
+                });
         }
         function viewInvitationsButton() {
             const token = "<%= typeof token !== 'undefined' ? token : '' %>";
@@ -346,7 +350,7 @@ ${nonce}
             errorMessage.style.display = 'block';
         }
 
-        
+
         document.getElementById('connectMetamask').addEventListener('click', connectMetamask);
         document.getElementById('addTelegram').addEventListener('click', addTelegram);
         document.getElementById('connetTelegram').addEventListener('click', connectTelegram);

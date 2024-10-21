@@ -3,15 +3,14 @@ const router = express.Router();
 
 /* controllers */
 const homePageController = require("../service/homePageController");
-const PageController = require("../service/pageController");
 
 // /* methods */
 router.get("/", homePageController.getHomePage);
 
-router.post("/getAccounts", PageController.getAccounts);
-router.post("/addTelegramAccount", PageController.addTelegramAccount);
-router.get("/getTelegramInvites", PageController.getTelegramInvites);
-router.post("/acceptInvite", PageController.acceptInvite);
+router.post("/getAccounts", homePageController.getAccounts);
+router.post("/addTelegramAccount", homePageController.addTelegramAccount);
+router.get("/getTelegramInvites", homePageController.getTelegramInvites);
+router.post("/acceptInvite", homePageController.acceptInvite);
 
 
 
