@@ -11,6 +11,9 @@ router.get('/twitter/login', PageController.twitterLogin);
 router.get("/telegram", homePageController.telegramLogin);
 router.get("/connectTelegram", homePageController.connectTelegram);
 router.get("/telegramCallback", homePageController.telegramCallback);
+
+router.get("telegramDeneme", homePageController.telegramDeneme);
+
 router.post("/getAccounts", PageController.getAccounts);
 router.post("/addTelegramAccount", PageController.addTelegramAccount);
 router.get("/getTelegramInvites", PageController.getTelegramInvites);

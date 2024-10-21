@@ -47,22 +47,29 @@
                 // Sunucuya POST isteği gönder
                 (async () => {
                     try {
-                        const response = await fetch(`https://8f08-78-177-177-231.ngrok-free.app/telegram/connect`, {
+                        const response = await fetch(`/login/telegramDeneme`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({ tgAuthResult })
                         });
-                        const data = await response.text();
+                        // const response = await fetch(`https://8f08-78-177-177-231.ngrok-free.app/telegram/connect`, {
+                        //     method: 'POST',
+                        //     headers: {
+                        //         'Content-Type': 'application/json'
+                        //     },
+                        //     body: JSON.stringify({ tgAuthResult })
+                        // });
+                        // const data = await response.text();
 
-                        console.log('Sunucudan gelen yanıt:', data);
-                        // Sunucudan gelen token'ı işleyin
-                        const token = data;
-                        console.log('Alınan token:', token);
-                        localStorage.setItem('token', token);
+                        // console.log('Sunucudan gelen yanıt:', data);
+                        // // Sunucudan gelen token'ı işleyin
+                        // const token = data;
+                        // console.log('Alınan token:', token);
+                        // localStorage.setItem('token', token);
 
-                        window.location.href = 'https://telagramapplegit-a55c4719cc06.herokuapp.com/?token=' + encodeURIComponent(token.replace(/"/g, ''));
+                        // window.location.href = 'https://telagramapplegit-a55c4719cc06.herokuapp.com/?token=' + encodeURIComponent(token.replace(/"/g, ''));
                     } catch (error) {
                         console.error('Bir hata oluştu:', error);
                     }

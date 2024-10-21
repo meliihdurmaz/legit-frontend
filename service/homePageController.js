@@ -28,6 +28,10 @@ exports.telegramCallback = function (req, res) {
     });
 };
 
+exports.telegramDeneme = function (req, res) {
+    console.log('Deneme');
+};
+
 exports.connectTelegram = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
     const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/telegram/telegramAddUrl';

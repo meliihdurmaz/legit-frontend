@@ -3,35 +3,36 @@ const nacl = require('tweetnacl');
 const naclUtil = require('tweetnacl-util');
 
 
-
 exports.getHomePage = function (req, res) {
-    const token = req.query.token;
-    req.session.token = token;
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
-    axios.get(hedefURL, {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    })
-        .then((response) => {
-            // res.send(response); // Kullanıcı bilgilerini geri gönder
-            // console.log('GET İsteği Başarılı:', response.data);
-            const sessionToken = req.session.token;
-            res.render('home', {
-                title: 'Home',
-                token: sessionToken,
-                response: response.data
-            });
-        })
-        .catch((error) => {
-            res.render('homePage', {
-                title: 'HomePage',
-                // token: token,
-                response: error.data
-            });
-            // console.error('GET İsteği Hatası:', error);
-        });
+    console.log('Home Page');
+    res.render('homePage', {
+        title: 'HomePage',
+    });
+    // const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
+    // axios.get(hedefURL, {
+    //     headers: {
+    //         'Authorization': `Bearer ${token}`,
+    //         'Content-Type': 'application/json'
+    //     }
+    // })
+    //     .then((response) => {
+    //         // res.send(response); // Kullanıcı bilgilerini geri gönder
+    //         // console.log('GET İsteği Başarılı:', response.data);
+    //         const sessionToken = req.session.token;
+    //         res.render('home', {
+    //             title: 'Home',
+    //             token: sessionToken,
+    //             response: response.data
+    //         });
+    //     })
+    //     .catch((error) => {
+    //         res.render('homePage', {
+    //             title: 'HomePage',
+    //             // token: token,
+    //             response: error.data
+    //         });
+    //         // console.error('GET İsteği Hatası:', error);
+    //     });
 
     // console.log('Token:', token);
 }
