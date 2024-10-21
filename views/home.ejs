@@ -115,11 +115,6 @@
         <div class="alert" id="error-message" style="display: none;"></div>
     </div>
     <script>
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
         // Twitter butonuna tıklama olayı
         function connectTelegram() {
             const token = localStorage.getItem('token');// Token'ı çerezden al
