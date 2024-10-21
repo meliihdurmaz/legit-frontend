@@ -8,6 +8,7 @@ exports.getHomePage = function (req, res) {
     res.render('homePage', {
         title: 'HomePage',
     });
+
     // const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
     // axios.get(hedefURL, {
     //     headers: {
@@ -35,7 +36,12 @@ exports.getHomePage = function (req, res) {
     //     });
 
     // console.log('Token:', token);
-}
+};
+
+exports.anaSayfa = function (req, res) {
+    console.log(req.body);
+};
+
 exports.addTwitterAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
     const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/twitter/twitterAdd';

@@ -6,7 +6,7 @@ const homePageController = require("../service/homePageController");
 const PageController = require("../service/pageController");
 
 /* methods */
-router.get("/", PageController.getHomePage);
+// router.get("/", PageController.getHomePage);
 router.get('/twitter/login', PageController.twitterLogin);
 router.get("/telegram", homePageController.telegramLogin);
 router.get("/connectTelegram", homePageController.connectTelegram);
