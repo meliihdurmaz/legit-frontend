@@ -307,7 +307,7 @@ ${nonce}
             }
         }
         function viewAccountsButton() {
-            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+            const token = localStorage.getItem('token');
             // Buraya hesapları gösteren işlevi ekleyin
             axios.post('/home/getAccounts', {}, {
                 headers: {
@@ -322,7 +322,7 @@ ${nonce}
             // Burada kullanıcı hesaplarını görüntüleyebilirsiniz
         }
         function twitterButton() {
-            const token = "<%= typeof token !== 'undefined' ? token : '' %>";
+            const token = localStorage.getItem('token');
             if (token) {
                 axios.post('/twitter/add', {}, {
                     headers: {
