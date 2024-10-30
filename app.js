@@ -27,5 +27,6 @@ app.use("/home", homePageRouter);
 
 
 app.listen(PORT, () => {
+    console.log("deneme");
     console.log(`Sunucu http://127.0.0.1:${PORT} adresinde çalışıyor`);
 });
