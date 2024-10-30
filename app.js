@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const PageRouter = require("./controller/pageRouter.js");
 const homePageRouter = require("./controller/homePageRouter.js");
 const loginRouter = require("./controller/loginRouter.js");
@@ -12,12 +11,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(session({
-    secret: '1234',  // Güçlü bir secret belirleyin
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }   // Geliştirme ortamında `secure` false olmalı, production'da true yapabilirsiniz.
-}));
+ 
 app.use(cors());
  
 

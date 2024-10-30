@@ -9,7 +9,7 @@ exports.getHomePage = function (req, res) {
         title: 'HomePage',
     });
 
-    // const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
+    // const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/user/me';
     // axios.get(hedefURL, {
     //     headers: {
     //         'Authorization': `Bearer ${token}`,
@@ -41,7 +41,7 @@ exports.getHomePage = function (req, res) {
 
 exports.addTwitterAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/twitter/twitterAdd';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/twitter/twitterAdd';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -64,7 +64,7 @@ exports.addMetaMaskAccount = async function (req, res) {
     const publicKey = req.body.publicKey;
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
 
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/metamask/add';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/metamask/add';
     try {
         const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
             headers: {
@@ -106,7 +106,7 @@ exports.loginMetaMaskAccount = async function (req, res) {
     const walletAddress = req.body.walletAddress;
     const publicKey = req.body.publicKey;
 
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/metamask/login';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/metamask/login';
     try {
         const response = await axios.post(hedefURL, { nonce, walletAddress, publicKey }, {
             headers: {

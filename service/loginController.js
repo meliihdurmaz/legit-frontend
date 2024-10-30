@@ -3,7 +3,7 @@ const axios = require('axios');
 
 exports.twitterLogin = function (req, res) {
     // console.log('Twitter Login');
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/twitter/login';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/twitter/login';
     axios.get(hedefURL, {
         headers: {
             'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ exports.twitterLogin = function (req, res) {
 
 exports.telegramLogin = function (req, res) {
     // const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/telegram/login';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/telegram/login';
     axios.get(hedefURL, {
         headers: {
             'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ exports.telegramCallback = function (req, res) {
 
 exports.connectTelegram = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/telegram/telegramAddUrl';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/telegram/telegramAddUrl';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,

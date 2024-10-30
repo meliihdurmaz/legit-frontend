@@ -12,7 +12,7 @@ exports.getHomePage = function (req, res) {
 exports.getAccounts = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];  // Authorization başlığından token'ı ayır
     console.log('Token:', token);
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/getAccounts';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/user/getAccounts';
     axios.get(hedefURL, {
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -27,7 +27,7 @@ exports.getAccounts = function (req, res) {
             console.error('GET İsteği Hatası:', error);
             res.status(500).json({ message: 'Bir hata oluştu.' });  // Hata durumunda istemciye hata mesajı gönder
         });
-    // const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/me';
+    // const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/user/me';
     // axios.get(hedefURL, {
     //     headers: {
     //         'Authorization': `Bearer ${token}`,
@@ -55,7 +55,7 @@ exports.getAccounts = function (req, res) {
 };
 exports.addTelegramAccount = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/telegram/add';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/telegram/add';
     axios.post(hedefURL, req.body, {
         headers: {
             authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ exports.addTelegramAccount = function (req, res) {
 };
 exports.getTelegramInvites = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
-    axios.get('https://8f08-78-177-177-231.ngrok-free.app/user/getTelegramInvites', {
+    axios.get('https://f642rqhc-8000.euw.devtunnels.ms/user/getTelegramInvites', {
         headers: {
             authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ exports.acceptInvite = function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
     const username = req.body;
     console.log('Username:', username);
-    const hedefURL = 'https://8f08-78-177-177-231.ngrok-free.app/user/respondTelegramInvite';
+    const hedefURL = 'https://f642rqhc-8000.euw.devtunnels.ms/user/respondTelegramInvite';
     axios.post(hedefURL, {
         username: String(username.username),
         status: "accept"
